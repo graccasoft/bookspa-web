@@ -15,11 +15,27 @@ import {MatGridListModule} from "@angular/material/grid-list";
 import {MatCardModule} from "@angular/material/card";
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatNativeDateModule} from '@angular/material/core';
+import {MatChipsModule} from "@angular/material/chips";
+import {MatInputModule} from "@angular/material/input";
+import {MatSelectModule} from "@angular/material/select";
+import {MatButtonModule} from "@angular/material/button";
+import { ReservationsComponent } from './reservations/reservations.component';
+import {MatMenuModule} from "@angular/material/menu";
+import { TreatmentsComponent } from './treatments/treatments.component';
+import { TreatmentsFormDialog } from "./treatments/treatments.component";
+import {MatDialogModule} from "@angular/material/dialog";
+import { CustomersComponent } from './customers/customers.component';
+import {CustomersFormDialog} from "./customers/customers.component";
 @NgModule({
   declarations: [
     AppComponent,
     LayoutComponent,
-    ReserveComponent
+    ReserveComponent,
+    ReservationsComponent,
+    TreatmentsComponent,
+    TreatmentsFormDialog,
+    CustomersComponent,
+    CustomersFormDialog
   ],
   imports: [
     BrowserModule,
@@ -33,7 +49,13 @@ import {MatNativeDateModule} from '@angular/material/core';
     MatGridListModule,
     MatCardModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatChipsModule,
+    MatInputModule,
+    MatSelectModule,
+    MatButtonModule,
+    MatMenuModule,
+    MatDialogModule
   ],
   providers: [],
   bootstrap: [AppComponent]

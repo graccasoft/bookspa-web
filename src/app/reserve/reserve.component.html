@@ -1,14 +1,83 @@
 <app-layout>
 
   <div class="row">
-    <div class="col-6">
-
+    <div class="col-md-4 col-sm-12">
+      <h4>Select Date</h4>
       <mat-card class="demo-inline-calendar-card">
         <mat-calendar></mat-calendar>
       </mat-card>
 
     </div>
-    <div class="col-6"></div>
+    <div class="col-md-8 col-sm-12">
+      <div class="row">
+        <div class="col-md-12">
+          <h4>Select Timeslot</h4>
+          <mat-chip-listbox aria-label="Fish selection">
+            <mat-chip-option>09:00</mat-chip-option>
+            <mat-chip-option>09:30</mat-chip-option>
+            <mat-chip-option>10:00</mat-chip-option>
+            <mat-chip-option>10:30</mat-chip-option>
+          </mat-chip-listbox>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <h4>Reservation Details</h4>
+          <div class="row">
+            <div class="col-12">
+              <mat-form-field class="w-m">
+                <mat-label>Select Package</mat-label>
+                <mat-select>
+                  <mat-option value="one">First option</mat-option>
+                  <mat-option value="two">Second option</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6 col-sm-12">
+              <mat-form-field class="w-100">
+                <mat-label>Customer Name</mat-label>
+                <input matInput>
+              </mat-form-field>
+            </div>
+            <div class="col-md-6 col-sm-12">
+              <mat-form-field class="w-100">
+                <mat-label>Customer Email</mat-label>
+                <input matInput>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6 col-sm-12">
+              <mat-form-field class="w-100">
+                <mat-label>Customer Phone</mat-label>
+                <input matInput>
+              </mat-form-field>
+            </div>
+            <div class="col-md-6 col-sm-12">
+              <mat-form-field class="w-100">
+                <mat-label>Customer Address</mat-label>
+                <input matInput>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6 col-sm-12">
+              <button mat-raised-button color="primary">Save Reservation</button>
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+
+    </div>
+
   </div>
 
 </app-layout>

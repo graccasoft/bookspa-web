@@ -7,13 +7,13 @@
     <hr>
     <ul class="nav nav-pills flex-column mb-auto">
       <li class="nav-item">
-        <a href="#" class="nav-link active" aria-current="page">
+        <a [routerLink]="['/reserve']" class="nav-link text-white" [ngClass]="{'active': activeMenu === 'reserve'}" aria-current="page">
           <mat-icon class="me-2">event</mat-icon>
           Reserve
         </a>
       </li>
       <li>
-        <a href="#" class="nav-link text-white">
+      <a [routerLink]="['/reservations']" class="nav-link text-white"  [ngClass]="{'active': activeMenu === 'reservations'}">
           <mat-icon class="me-2">calendar_month</mat-icon>
           Reservations
         </a>
@@ -25,13 +25,13 @@
         </a>
       </li>
       <li>
-        <a href="#" class="nav-link text-white">
+        <a [routerLink]="['/treatments']" class="nav-link text-white" [ngClass]="{'active': activeMenu === 'treatments'}">
           <mat-icon class="me-2">spa</mat-icon>
           Treatments
         </a>
       </li>
       <li>
-        <a href="#" class="nav-link text-white">
+        <a [routerLink]="['/customers']" class="nav-link text-white" [ngClass]="{'active': activeMenu === 'customers'}">
           <mat-icon class="me-2">groups</mat-icon>
           Customers
         </a>
@@ -56,7 +56,10 @@
       </header>
     </div>
 
-    <ng-content></ng-content>
+    <div class="p-4">
+      <ng-content></ng-content>
+    </div>
+
   </div>
 </main>
 

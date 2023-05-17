@@ -1,0 +1,34 @@
+<app-layout [activeMenu]="'treatments'" >
+
+  <button mat-raised-button color="primary" (click)="openDialog()" class="mb-4" >
+    Add Treatment
+  </button>
+  <table class="table table-striped table-bordered">
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Price</th>
+      <th>Status</th>
+      <th class="text-right">Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td>1</td>
+      <td>Nuru</td>
+      <td>$20.00</td>
+      <td>Active</td>
+      <td class="text-right">
+        <button mat-button [matMenuTriggerFor]="menu" mat-raised-button color="primary">Actions</button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item data-bs-toggle="modal" data-bs-target="#treatment-form">Edit</button>
+          <button mat-menu-item>Check-In</button>
+        </mat-menu>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+
+</app-layout>
