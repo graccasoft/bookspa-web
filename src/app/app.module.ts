@@ -12,7 +12,9 @@ import {MatListModule} from "@angular/material/list";
 import {MatIconModule} from "@angular/material/icon";
 import {MatLineModule} from "@angular/material/core";
 import {MatGridListModule} from "@angular/material/grid-list";
-
+import {MatCardModule} from "@angular/material/card";
+import {MatDatepickerModule} from "@angular/material/datepicker";
+import {MatNativeDateModule} from '@angular/material/core';
 @NgModule({
   declarations: [
     AppComponent,
@@ -28,7 +30,10 @@ import {MatGridListModule} from "@angular/material/grid-list";
     MatListModule,
     MatIconModule,
     MatLineModule,
-    MatGridListModule
+    MatGridListModule,
+    MatCardModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   providers: [],
   bootstrap: [AppComponent]
