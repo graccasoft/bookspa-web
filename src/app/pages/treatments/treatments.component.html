@@ -1,6 +1,6 @@
 <app-layout [activeMenu]="'treatments'" >
 
-  <button mat-raised-button color="primary" (click)="openDialog()" class="mb-4" >
+  <button mat-raised-button color="primary" (click)="newTreatment()" class="mb-4" >
     Add Treatment
   </button>
   <table class="table table-striped table-bordered">
@@ -9,21 +9,23 @@
       <th>ID</th>
       <th>Name</th>
       <th>Price</th>
+      <th>Duration</th>
       <th>Status</th>
       <th class="text-right">Actions</th>
     </tr>
     </thead>
     <tbody>
-    <tr>
-      <td>1</td>
-      <td>Nuru</td>
-      <td>$20.00</td>
+    <tr *ngFor=" let treatment of treatments">
+      <td>{{ treatment.id }}</td>
+      <td>{{ treatment.name }}</td>
+      <td>{{ treatment.price }}</td>
+      <td>{{ treatment.minimumDuration }} to {{treatment.maximumDuration}} min</td>
       <td>Active</td>
       <td class="text-right">
         <button mat-button [matMenuTriggerFor]="menu" mat-raised-button color="primary">Actions</button>
         <mat-menu #menu="matMenu">
-          <button mat-menu-item data-bs-toggle="modal" data-bs-target="#treatment-form">Edit</button>
-          <button mat-menu-item>Check-In</button>
+          <button mat-menu-item data-bs-toggle="modal" data-bs-target="#treatment-form" (click)="editTreatment(treatment.id)">Edit</button>
+          <button mat-menu-item>Delete</button>
         </mat-menu>
       </td>
     </tr>

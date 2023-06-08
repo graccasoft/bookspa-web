@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LayoutComponent } from './layout/layout.component';
-import { ReserveComponent } from './reserve/reserve.component';
+import { ReserveComponent } from './pages/reserve/reserve.component';
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {MatSidenavModule} from "@angular/material/sidenav";
 import {MatListModule} from "@angular/material/list";
@@ -19,13 +19,16 @@ import {MatChipsModule} from "@angular/material/chips";
 import {MatInputModule} from "@angular/material/input";
 import {MatSelectModule} from "@angular/material/select";
 import {MatButtonModule} from "@angular/material/button";
-import { ReservationsComponent } from './reservations/reservations.component';
+import { ReservationsComponent } from './pages/reservations/reservations.component';
 import {MatMenuModule} from "@angular/material/menu";
-import { TreatmentsComponent } from './treatments/treatments.component';
-import { TreatmentsFormDialog } from "./treatments/treatments.component";
+import { TreatmentsComponent } from './pages/treatments/treatments.component';
+import { TreatmentsFormDialog } from "./pages/treatments/treatments.component";
 import {MatDialogModule} from "@angular/material/dialog";
-import { CustomersComponent } from './customers/customers.component';
-import {CustomersFormDialog} from "./customers/customers.component";
+import { CustomersComponent } from './pages/customers/customers.component';
+import {CustomersFormDialog} from "./pages/customers/customers.component";
+import {HttpClientModule} from "@angular/common/http";
+import {FormsModule} from "@angular/forms";
+import {MatSnackBarModule} from "@angular/material/snack-bar";
 @NgModule({
   declarations: [
     AppComponent,
@@ -41,6 +44,9 @@ import {CustomersFormDialog} from "./customers/customers.component";
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    HttpClientModule,
+    FormsModule,
+    MatSnackBarModule,
     MatToolbarModule,
     MatSidenavModule,
     MatListModule,

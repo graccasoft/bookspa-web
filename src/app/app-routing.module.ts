@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import {ReserveComponent} from "./reserve/reserve.component";
-import {ReservationsComponent} from "./reservations/reservations.component";
-import {TreatmentsComponent} from "./treatments/treatments.component";
-import {CustomersComponent} from "./customers/customers.component";
+import {ReserveComponent} from "./pages/reserve/reserve.component";
+import {ReservationsComponent} from "./pages/reservations/reservations.component";
+import {TreatmentsComponent} from "./pages/treatments/treatments.component";
+import {CustomersComponent} from "./pages/customers/customers.component";
 
 const routes: Routes = [
   {path:'reserve', component:ReserveComponent},
