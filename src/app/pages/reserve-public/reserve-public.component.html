@@ -46,7 +46,7 @@
               <div class="row">
                 <div class="col-md-8 col-sm-12">
                   <mat-card class="demo-inline-calendar-card mt-4">
-                    <mat-calendar></mat-calendar>
+                    <mat-calendar [(selected)]="booking.bookingDate" [minDate]="tomorrow"></mat-calendar>
                   </mat-card>
                 </div>
                 <div class="col-md-4 col-sm-12 pt-4">
@@ -73,32 +73,43 @@
               <div class="row mt-4">
                 <div class="col-md-6 col-sm-12">
                   <mat-form-field class="w-100">
-                    <mat-label>Full Name</mat-label>
-                    <input matInput>
+                    <mat-label>First Name</mat-label>
+                    <input matInput [(ngModel)]="client.firstName" name="firstName">
                   </mat-form-field>
                 </div>
                 <div class="col-md-6 col-sm-12">
                   <mat-form-field class="w-100">
-                    <mat-label>Email Address</mat-label>
-                    <input matInput>
+                    <mat-label>Last Name</mat-label>
+                    <input matInput [(ngModel)]="client.lastName" name="lastName" >
                   </mat-form-field>
                 </div>
+
               </div>
 
               <div class="row">
                 <div class="col-md-6 col-sm-12">
                   <mat-form-field class="w-100">
-                    <mat-label>Phone Number</mat-label>
-                    <input matInput>
+                    <mat-label>Email Address</mat-label>
+                    <input matInput [(ngModel)]="client.email" name="email">
                   </mat-form-field>
                 </div>
                 <div class="col-md-6 col-sm-12">
                   <mat-form-field class="w-100">
-                    <mat-label>Address</mat-label>
-                    <input matInput>
+                    <mat-label>Phone Number</mat-label>
+                    <input matInput [(ngModel)]="client.phoneNumber" name="phoneNumber">
                   </mat-form-field>
                 </div>
               </div>
+
+              <div class="row">
+                <div class="col-md-12 col-sm-12">
+                  <mat-form-field class="w-100">
+                    <mat-label>Address</mat-label>
+                    <input matInput [(ngModel)]="client.address" name="address">
+                  </mat-form-field>
+                </div>
+              </div>
+
               <div class="text-end">
                 <button mat-button matStepperPrevious class="btn btn-primary border me-4">Back</button>
                 <button mat-button matStepperNext class="btn btn-primary border">Next</button>
@@ -107,10 +118,28 @@
           </mat-step>
           <mat-step>
             <ng-template matStepLabel>Confirm</ng-template>
-            <p>You are now done.</p>
-            <div>
-              <button mat-button matStepperPrevious>Back</button>
-              <button mat-button (click)="stepper.reset()">Reset</button>
+
+            <div *ngIf="treatment" class="text-start mb-4 mt-4">
+              <table class="table table-striped">
+                <tr class="p-2">
+                  <td>Treatment: <strong>{{treatment.name}}</strong></td>
+                  <td>Date: <strong>{{booking.bookingDate}}</strong></td>
+                </tr>
+                <tr class="p-2">
+                  <td>Your Name: <strong>{{client.firstName}} {{client.lastName}}</strong></td>
+                  <td>Email: <strong>{{client.email}}</strong></td>
+                </tr>
+                <tr class="p-2">
+                  <td>Phone: <strong>{{client.phoneNumber}}</strong></td>
+                  <td>Address: <strong>{{client.address}}</strong></td>
+                </tr>
+              </table>
+
+            </div>
+
+            <div class="text-end">
+              <button mat-button matStepperPrevious class="btn btn-primary border me-4">Back</button>
+              <button mat-button (click)="saveBooking()" class="btn btn-primary border">Confirm Booking</button>
             </div>
           </mat-step>
         </mat-stepper>

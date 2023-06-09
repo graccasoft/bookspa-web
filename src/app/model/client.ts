@@ -2,7 +2,8 @@ import {Tenant} from "./tenant";
 
 export class Client{
   id: number
-  surname: string
+  firstName: string
+  lastName: string
   phoneNumber: string
   email: string
   address: string
@@ -11,9 +12,10 @@ export class Client{
   tenant: Tenant
 
 
-  constructor(id: number, surname: string, phoneNumber: string, email: string, address: string, city: string, country: string, tenant: Tenant) {
+  constructor(id: number, firstName: string,lastName: string, phoneNumber: string, email: string, address: string, city: string, country: string, tenant: Tenant) {
     this.id = id;
-    this.surname = surname;
+    this.firstName = firstName;
+    this.lastName = lastName;
     this.phoneNumber = phoneNumber;
     this.email = email;
     this.address = address;
