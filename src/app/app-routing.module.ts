@@ -4,12 +4,14 @@ import {ReserveComponent} from "./pages/reserve/reserve.component";
 import {ReservationsComponent} from "./pages/reservations/reservations.component";
 import {TreatmentsComponent} from "./pages/treatments/treatments.component";
 import {CustomersComponent} from "./pages/customers/customers.component";
+import {ReservePublicComponent} from "./pages/reserve-public/reserve-public.component";
 
 const routes: Routes = [
   {path:'reserve', component:ReserveComponent},
   {path:'reservations', component:ReservationsComponent},
   {path:'treatments', component:TreatmentsComponent},
   {path:'customers', component:CustomersComponent},
+  {path:'online-booking', component:ReservePublicComponent}
 ];
 
 @NgModule({
