@@ -1,0 +1,8 @@
+<h1 mat-dialog-title>{{data.title}}</h1>
+<div mat-dialog-content>
+  {{data.text}}
+</div>
+<div mat-dialog-actions class="float-end">
+  <button mat-button mat-dialog-close class="btn btn-secondary btn-sm me-5">{{data.cancelText}}</button>
+  <button mat-button mat-dialog-close cdkFocusInitial [mat-dialog-close]="true" class="btn btn-primary btn-sm">{{data.confirmText}}</button>
+</div>

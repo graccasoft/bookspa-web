@@ -32,6 +32,7 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
 import { ReservePublicComponent } from './pages/reserve-public/reserve-public.component';
 import {MatStepperModule} from "@angular/material/stepper";
 import { ReservePublicConfirmationComponent } from './pages/reserve-public-confirmation/reserve-public-confirmation.component';
+import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -43,7 +44,8 @@ import { ReservePublicConfirmationComponent } from './pages/reserve-public-confi
     CustomersComponent,
     CustomersFormDialog,
     ReservePublicComponent,
-    ReservePublicConfirmationComponent
+    ReservePublicConfirmationComponent,
+    ConfirmDialogComponent
   ],
   imports: [
     BrowserModule,

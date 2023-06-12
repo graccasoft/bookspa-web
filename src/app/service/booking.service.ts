@@ -24,4 +24,8 @@ export class BookingService {
   getTenantBookings(tenantId: number): Observable<Booking[]>{
     return this.http.get<Booking[]>(`${this.apiUrl}?tenantId=${tenantId}`)
   }
+
+  cancelBooking(bookingId: number): Observable<any>{
+    return this.http.delete(`${this.apiUrl}/${bookingId}`)
+  }
 }

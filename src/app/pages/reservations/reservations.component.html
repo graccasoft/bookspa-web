@@ -20,11 +20,11 @@
           {{booking.client.firstName + ' ' + booking.client.lastName}}<br>
           {{ booking.client.phoneNumber }}
         </td>
-        <td>Confirmed</td>
+        <td>{{ booking.status }}</td>
         <td class="text-right">
           <button mat-button [matMenuTriggerFor]="menu" mat-raised-button color="primary">Actions</button>
           <mat-menu #menu="matMenu">
-            <button mat-menu-item>Cancel</button>
+            <button mat-menu-item (click)="cancelBooking(booking.id)" >Cancel</button>
             <button mat-menu-item>Check-In</button>
           </mat-menu>
         </td>
