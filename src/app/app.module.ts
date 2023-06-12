@@ -27,10 +27,11 @@ import {MatDialogModule} from "@angular/material/dialog";
 import { CustomersComponent } from './pages/customers/customers.component';
 import {CustomersFormDialog} from "./pages/customers/customers.component";
 import {HttpClientModule} from "@angular/common/http";
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import { ReservePublicComponent } from './pages/reserve-public/reserve-public.component';
 import {MatStepperModule} from "@angular/material/stepper";
+import { ReservePublicConfirmationComponent } from './pages/reserve-public-confirmation/reserve-public-confirmation.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -41,7 +42,8 @@ import {MatStepperModule} from "@angular/material/stepper";
     TreatmentsFormDialog,
     CustomersComponent,
     CustomersFormDialog,
-    ReservePublicComponent
+    ReservePublicComponent,
+    ReservePublicConfirmationComponent
   ],
   imports: [
     BrowserModule,
@@ -65,7 +67,8 @@ import {MatStepperModule} from "@angular/material/stepper";
     MatButtonModule,
     MatMenuModule,
     MatDialogModule,
-    MatStepperModule
+    MatStepperModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -2,19 +2,16 @@
   <header>
     <div class="d-flex flex-column flex-md-row align-items-center pb-3 mb-4 border-bottom">
       <a href="/" class="d-flex align-items-center link-body-emphasis text-decoration-none">
-        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="32" class="me-2" viewBox="0 0 118 94" role="img"><title>Bootstrap</title><path fill-rule="evenodd" clip-rule="evenodd" d="M24.509 0c-6.733 0-11.715 5.893-11.492 12.284.214 6.14-.064 14.092-2.066 20.577C8.943 39.365 5.547 43.485 0 44.014v5.972c5.547.529 8.943 4.649 10.951 11.153 2.002 6.485 2.28 14.437 2.066 20.577C12.794 88.106 17.776 94 24.51 94H93.5c6.733 0 11.714-5.893 11.491-12.284-.214-6.14.064-14.092 2.066-20.577 2.009-6.504 5.396-10.624 10.943-11.153v-5.972c-5.547-.529-8.934-4.649-10.943-11.153-2.002-6.484-2.28-14.437-2.066-20.577C105.214 5.894 100.233 0 93.5 0H24.508zM80 57.863C80 66.663 73.436 72 62.543 72H44a2 2 0 01-2-2V24a2 2 0 012-2h18.437c9.083 0 15.044 4.92 15.044 12.474 0 5.302-4.01 10.049-9.119 10.88v.277C75.317 46.394 80 51.21 80 57.863zM60.521 28.34H49.948v14.934h8.905c6.884 0 10.68-2.772 10.68-7.727 0-4.643-3.264-7.207-9.012-7.207zM49.948 49.2v16.458H60.91c7.167 0 10.964-2.876 10.964-8.281 0-5.406-3.903-8.178-11.425-8.178H49.948z" fill="currentColor"></path></svg>
-        <span class="fs-4">Online Booking</span>
+        <img src="assets/red-kokia-logo.svg" width="100px">
       </a>
 
       <nav class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
-        <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="#">Features</a>
-        <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="#">Enterprise</a>
-        <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="#">Support</a>
-        <a class="py-2 link-body-emphasis text-decoration-none" href="#">Pricing</a>
+        <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="#">Home</a>
+        <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="#">Client Login</a>
       </nav>
     </div>
 
-    <div class="pricing-header p-3 pb-md-4 mx-auto text-center">
+    <div class="pricing-header p-3 pb-md-4 mx-auto">
       <h1 class="display-4 fw-normal text-body-emphasis">BOOK AN APPOINTMENT</h1>
    </div>
   </header>
@@ -22,16 +19,16 @@
   <div>
     <div class="row mb-3">
       <div class="col-md-8 col-sm-12  mx-auto text-center ">
-        <mat-stepper orientation="vertical"  #stepper>
-          <mat-step >
-            <form >
+        <mat-stepper orientation="vertical"  #stepper linear="true">
+          <mat-step [stepControl]="firstFormGroup">
+            <form [formGroup]="firstFormGroup">
               <ng-template matStepLabel>Book Now</ng-template>
               <div class="row  mt-4">
                 <div class="col-md-8 col-sm-12">
                   <mat-form-field class="w-100">
                     <mat-label>Select Package</mat-label>
-                    <mat-select [(ngModel)]="treatment" name = "treatment" >
-                      <mat-option *ngFor="let treatment of treatments" [value]="treatment" >
+                    <mat-select [(ngModel)]="treatment" name = "treatment" formControlName="treatmentCtrl" required >
+                      <mat-option *ngFor="let treatment of treatments" [value]="treatment"  >
                         {{treatment.name}}
                       </mat-option>
                     </mat-select>
@@ -41,9 +38,9 @@
                 <div class="col-md-4 col-sm-12">
                   <mat-form-field class="w-100">
                     <mat-label>Select Duration</mat-label>
-                    <mat-select [(ngModel)]="booking.duration" name = "duration" >
+                    <mat-select [(ngModel)]="booking.duration" name = "duration" formControlName="durationCtrl" min="15" >
                       <mat-option value="15" >15 Min</mat-option>
-                      <mat-option value="30" >15 Min</mat-option>
+                      <mat-option value="30" >30 Min</mat-option>
                       <mat-option value="60" >1 Hr</mat-option>
                       <mat-option value="90" >1 Hr 30 min</mat-option>
                       <mat-option value="120" >2 Hrs</mat-option>
@@ -57,8 +54,8 @@
               </div>
             </form>
           </mat-step>
-          <mat-step>
-            <form >
+          <mat-step [stepControl]="secondFormGroup">
+            <form [formGroup]="secondFormGroup">
               <ng-template matStepLabel>Select Date</ng-template>
               <div class="row">
                 <div class="col-md-8 col-sm-12">
@@ -68,7 +65,7 @@
                 </div>
                 <div class="col-md-4 col-sm-12 pt-4">
                   <h6>Available timeslots</h6>
-                  <mat-chip-listbox aria-label="Available Timeslots" [(ngModel)]="selectedTimeSlot" name="selectedTimeSlot" (change)="timeSlotSelected($event)">
+                  <mat-chip-listbox aria-label="Available Timeslots" [(ngModel)]="selectedTimeSlot" name="selectedTimeSlot" (change)="timeSlotSelected($event)" formControlName="timeSlotCtrl" required>
                     <mat-chip-option *ngFor="let timeSlot of availableTimeSlots" >{{timeSlot}}</mat-chip-option>
                   </mat-chip-listbox>
                 </div>
@@ -80,21 +77,21 @@
               </div>
             </form>
           </mat-step>
-          <mat-step>
-            <form >
+          <mat-step [stepControl]="thirdFormGroup">
+            <form  [formGroup]="thirdFormGroup">
               <ng-template matStepLabel>Your Details</ng-template>
 
               <div class="row mt-4">
                 <div class="col-md-6 col-sm-12">
                   <mat-form-field class="w-100">
                     <mat-label>First Name</mat-label>
-                    <input matInput [(ngModel)]="client.firstName" name="firstName">
+                    <input matInput [(ngModel)]="client.firstName" name="firstName" formControlName="firstNameCtrl" required>
                   </mat-form-field>
                 </div>
                 <div class="col-md-6 col-sm-12">
                   <mat-form-field class="w-100">
                     <mat-label>Last Name</mat-label>
-                    <input matInput [(ngModel)]="client.lastName" name="lastName" >
+                    <input matInput [(ngModel)]="client.lastName" name="lastName" formControlName="lastNameCtrl" required>
                   </mat-form-field>
                 </div>
 
@@ -104,13 +101,13 @@
                 <div class="col-md-6 col-sm-12">
                   <mat-form-field class="w-100">
                     <mat-label>Email Address</mat-label>
-                    <input matInput [(ngModel)]="client.email" name="email">
+                    <input matInput [(ngModel)]="client.email" name="email" formControlName="emailCtrl" required>
                   </mat-form-field>
                 </div>
                 <div class="col-md-6 col-sm-12">
                   <mat-form-field class="w-100">
                     <mat-label>Phone Number</mat-label>
-                    <input matInput [(ngModel)]="client.phoneNumber" name="phoneNumber">
+                    <input matInput [(ngModel)]="client.phoneNumber" name="phoneNumber" formControlName="phoneNumberCtrl" required>
                   </mat-form-field>
                 </div>
               </div>
@@ -170,39 +167,26 @@
 
   <footer class="pt-4 my-md-5 pt-md-5 border-top">
     <div class="row">
-      <div class="col-12 col-md">
-        <img class="mb-2" src="/docs/5.3/assets/brand/bootstrap-logo.svg" alt="" width="24" height="19">
-        <small class="d-block mb-3 text-body-secondary">© 2017–2023</small>
-      </div>
+
       <div class="col-6 col-md">
-        <h5>Features</h5>
+        <h5>Quick Links</h5>
         <ul class="list-unstyled text-small">
-          <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Cool stuff</a></li>
-          <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Random feature</a></li>
-          <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Team feature</a></li>
-          <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Stuff for developers</a></li>
-          <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Another one</a></li>
+          <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Blog</a></li>
+          <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Client Login</a></li>
+          <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">FAQ</a></li>
+          <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Features</a></li>
+          <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Help & Support</a></li>
           <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Last time</a></li>
         </ul>
       </div>
       <div class="col-6 col-md">
-        <h5>Resources</h5>
+        <h5>Contact Us</h5>
         <ul class="list-unstyled text-small">
-          <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Resource</a></li>
-          <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Resource name</a></li>
-          <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Another resource</a></li>
-          <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Final resource</a></li>
+          <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">+44 7443 264790</a></li>
+          <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">support@redkokia.com</a></li>
         </ul>
       </div>
-      <div class="col-6 col-md">
-        <h5>About</h5>
-        <ul class="list-unstyled text-small">
-          <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Team</a></li>
-          <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Locations</a></li>
-          <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Privacy</a></li>
-          <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Terms</a></li>
-        </ul>
-      </div>
+
     </div>
   </footer>
 </div>

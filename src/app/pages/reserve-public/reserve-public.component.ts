@@ -8,6 +8,8 @@ import {BookingService} from "../../service/booking.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {MatChipListboxChange} from "@angular/material/chips";
 import {Utils} from "../../utils/utils";
+import {FormBuilder, Validators} from "@angular/forms";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-reserve-public',
@@ -18,18 +20,33 @@ export class ReservePublicComponent {
 
   tenant: Tenant = new Tenant(1)
   treatments: Treatment[] = []
-  treatment: Treatment = new Treatment(0,'','',0,0,0,this.tenant)
+  treatment!: Treatment  //= new Treatment(0,'','',0,0,0,this.tenant)
   client: Client = new Client(0,'','','','','','','',this.tenant)
   booking: Booking = new Booking(0,new Date(), new Date(),0,'NEW', this.client,this.treatment)
   tomorrow = new Date()
   availableTimeSlots: String[] = []
-  selectedTimeSlot = "00:00"
+  selectedTimeSlot! : String
   displayDate = new Date()
 
+  firstFormGroup = this._formBuilder.group({
+    treatmentCtrl: ['', Validators.required],
+    durationCtrl: ['', Validators.min(15)],
+  });
+  secondFormGroup = this._formBuilder.group({
+    timeSlotCtrl: ['', Validators.required],
+  });
+  thirdFormGroup = this._formBuilder.group({
+    firstNameCtrl: ['', Validators.required],
+    lastNameCtrl: ['', Validators.required],
+    emailCtrl: ['', Validators.required],
+    phoneNumberCtrl: ['', Validators.required],
+  });
   constructor(
     private treatmentService: TreatmentService,
     private bookingService: BookingService,
-    private _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
+    private _formBuilder: FormBuilder,
+    private _router: Router
   ) {
   }
 
@@ -70,6 +87,7 @@ export class ReservePublicComponent {
     this.bookingService.save(this.booking)
       .subscribe(booking=>{
         this._snackBar.open("Booking successfully submitted", "Ok")
+        this._router.navigate(['booking-success'])
       })
   }
 }
