@@ -63,16 +63,13 @@
               <div class="row">
                 <div class="col-md-8 col-sm-12">
                   <mat-card class="demo-inline-calendar-card mt-4">
-                    <mat-calendar [(selected)]="booking.bookingDate" [minDate]="tomorrow"></mat-calendar>
+                    <mat-calendar [(selected)]="booking.bookingDate" [minDate]="tomorrow" (selectedChange)="fetchTimeSlots($event)"></mat-calendar>
                   </mat-card>
                 </div>
                 <div class="col-md-4 col-sm-12 pt-4">
                   <h6>Available timeslots</h6>
-                  <mat-chip-listbox aria-label="Fish selection">
-                    <mat-chip-option>09:00</mat-chip-option>
-                    <mat-chip-option>09:30</mat-chip-option>
-                    <mat-chip-option>10:00</mat-chip-option>
-                    <mat-chip-option>14:00</mat-chip-option>
+                  <mat-chip-listbox aria-label="Available Timeslots" [(ngModel)]="selectedTimeSlot" name="selectedTimeSlot" (change)="timeSlotSelected($event)">
+                    <mat-chip-option *ngFor="let timeSlot of availableTimeSlots" >{{timeSlot}}</mat-chip-option>
                   </mat-chip-listbox>
                 </div>
               </div>
@@ -140,7 +137,7 @@
               <table class="table table-striped">
                 <tr class="p-2">
                   <td>Treatment: <strong>{{treatment.name}}</strong></td>
-                  <td>Date: <strong>{{booking.bookingDate}}</strong></td>
+                  <td>Date: <strong>{{displayDate | date:'EEEE d MMMM y hh:mm'}}</strong></td>
                 </tr>
                 <tr class="p-2">
                   <td>Your Name: <strong>{{client.firstName}} {{client.lastName}}</strong></td>
