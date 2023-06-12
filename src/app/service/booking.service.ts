@@ -20,4 +20,8 @@ export class BookingService {
     const urlDate = Utils.dateToUrlFormat(date)
     return this.http.get<TimeSlot[]>(`${this.apiUrl}/available-slots?tenantId=${tenantId}&date=${urlDate}&duration=${duration}`);
   }
+
+  getTenantBookings(tenantId: number): Observable<Booking[]>{
+    return this.http.get<Booking[]>(`${this.apiUrl}?tenantId=${tenantId}`)
+  }
 }

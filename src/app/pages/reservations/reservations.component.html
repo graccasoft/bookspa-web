@@ -12,13 +12,13 @@
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td>2020-01-01</td>
-        <td>09:00</td>
-        <td>Nuru</td>
+      <tr *ngFor="let booking of bookings">
+        <td>{{ booking.bookingDate | date:'EEEE d MMMM y' }}</td>
+        <td>{{ booking.bookingDate | date: 'HH:mm' }}</td>
+        <td>{{ booking.treatment.name }}</td>
         <td>
-          Gracious Mashasha<br>
-          +26377930259
+          {{booking.client.firstName + ' ' + booking.client.lastName}}<br>
+          {{ booking.client.phoneNumber }}
         </td>
         <td>Confirmed</td>
         <td class="text-right">
