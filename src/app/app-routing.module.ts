@@ -14,8 +14,8 @@ const routes: Routes = [
   {path:'reservations', component:ReservationsComponent},
   {path:'treatments', component:TreatmentsComponent},
   {path:'customers', component:CustomersComponent},
-  {path:'online-booking', component:ReservePublicComponent},
-  {path:'booking-success', component:ReservePublicConfirmationComponent},
+  {path:'online-booking', component:ReservePublicComponent, title:'Online Booking - BlackKokia'},
+  {path:'booking-success', component:ReservePublicConfirmationComponent, title:'Online Booking - BlackKokia'},
 ];
 
 @NgModule({

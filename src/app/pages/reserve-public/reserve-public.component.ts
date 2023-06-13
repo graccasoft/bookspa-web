@@ -42,7 +42,6 @@ export class ReservePublicComponent {
     phoneNumberCtrl: ['', Validators.required],
   });
   constructor(
-    private treatmentService: TreatmentService,
     private bookingService: BookingService,
     private _snackBar: MatSnackBar,
     private _formBuilder: FormBuilder,
@@ -55,7 +54,7 @@ export class ReservePublicComponent {
     this.fetchTreatments()
   }
   fetchTreatments(){
-    this.treatmentService.get(this.tenant.id)
+    this.bookingService.getTreatments(this.tenant.id)
       .subscribe(treatments => this.treatments = treatments)
   }
 
@@ -84,7 +83,7 @@ export class ReservePublicComponent {
 
   saveBooking(){
     this.booking.treatment = this.treatment
-    this.bookingService.save(this.booking)
+    this.bookingService.bookOnline(this.booking)
       .subscribe(booking=>{
         this._snackBar.open("Booking successfully submitted", "Ok")
         this._router.navigate(['booking-success'])
