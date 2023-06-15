@@ -2,6 +2,16 @@
 <mat-dialog-content>
   <form (ngSubmit)="saveTreatment()" #treatmentForm="ngForm">
     <div class="row">
+      <div class="col-sm-12 ">
+        <mat-form-field class="w-100">
+          <mat-label>Category</mat-label>
+          <mat-select matInput [(ngModel)]="treatment.category" name="category">
+            <mat-option *ngFor="let category of categories" [value]="category">{{category.name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row">
       <div class="col-sm-12 col-md-6">
         <mat-form-field class="w-100">
           <mat-label>Treatment Name</mat-label>
@@ -18,18 +28,11 @@
     <div class="row">
       <div class="col-sm-12 col-md-6">
         <mat-form-field class="w-100">
-          <mat-label>Minimum Duration(min)</mat-label>
+          <mat-label>Duration(min)</mat-label>
           <input matInput [(ngModel)]="treatment.minimumDuration" name="minimumDuration">
         </mat-form-field>
       </div>
-      <div class="col-sm-12 col-md-6">
-        <mat-form-field class="w-100">
-          <mat-label>Maximum Duration(min)</mat-label>
-          <input matInput [(ngModel)]="treatment.maximumDuration" name="maximumDuration">
-        </mat-form-field>
-      </div>
-    </div>
-    <div class="row">
+
       <div class="col-sm-12 col-md-6">
         <mat-form-field class="w-100">
           <mat-label>Price</mat-label>

@@ -8,6 +8,7 @@
     <tr>
       <th>ID</th>
       <th>Name</th>
+      <th>Category</th>
       <th>Price</th>
       <th>Duration</th>
       <th>Status</th>
@@ -18,8 +19,9 @@
     <tr *ngFor=" let treatment of treatments">
       <td>{{ treatment.id }}</td>
       <td>{{ treatment.name }}</td>
+      <td>{{ treatment.category?.name }}</td>
       <td>{{ treatment.price }}</td>
-      <td>{{ treatment.minimumDuration }} to {{treatment.maximumDuration}} min</td>
+      <td>{{ Utils.formatDuration( treatment.minimumDuration) }}</td>
       <td>Active</td>
       <td class="text-right">
         <button mat-button [matMenuTriggerFor]="menu" mat-raised-button color="primary">Actions</button>

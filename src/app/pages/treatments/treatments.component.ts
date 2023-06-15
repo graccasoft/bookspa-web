@@ -4,6 +4,9 @@ import {TreatmentService} from "../../service/treatment.service";
 import {Treatment} from "../../model/treatment";
 import {Tenant} from "../../model/tenant";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {TreatmentCategory} from "../../model/treatment-category";
+import {CategoryService} from "../../service/category.service";
+import { Utils } from 'src/app/utils/utils';
 
 @Component({
   selector: 'app-treatments',
@@ -11,7 +14,7 @@ import {MatSnackBar} from "@angular/material/snack-bar";
   styleUrls: ['./treatments.component.css']
 })
 export class TreatmentsComponent {
-
+  protected readonly Utils = Utils;
   treatments: Treatment[] = []
   tenant: Tenant = new Tenant(1)
   treatment: Treatment = new Treatment(0,'','',0,0,0, this.tenant)
@@ -56,13 +59,22 @@ export class TreatmentsComponent {
 export class TreatmentsFormDialog {
 
   treatment!: Treatment
+  categories: TreatmentCategory[] = []
   constructor(
     @Inject(MAT_DIALOG_DATA) data: { treatment: Treatment },
     private treatmentService: TreatmentService,
+    private categoryService: CategoryService,
     private dialogRef: MatDialogRef<TreatmentsFormDialog>,
     private _snackBar: MatSnackBar) {
     this.treatment = data.treatment
   }
+
+  ngOnInit(){
+    this.categoryService.get().subscribe(
+      categories=> this.categories = categories
+    )
+  }
+
   saveTreatment() {
     this.treatmentService.save( this.treatment ).subscribe((treatment)=>{
       this._snackBar.open("Treatment has been saved", "Ok")
