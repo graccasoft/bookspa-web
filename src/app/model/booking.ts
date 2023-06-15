@@ -8,16 +8,27 @@ export class Booking{
   duration: number
   status: string
   client: Client
-  treatment: Treatment
+  treatments: Treatment[]
+  clientNotes: string
 
 
-  constructor(id: number, createdAt: Date, bookingDate: Date, duration: number, status: string, client: Client, treatment: Treatment) {
+  constructor(
+    id: number,
+    createdAt: Date,
+    bookingDate: Date,
+    duration: number,
+    status: string,
+    client: Client,
+    treatments: Treatment[],
+    clientNotes:string
+  ) {
     this.id = id;
     this.createdAt = createdAt;
     this.bookingDate = bookingDate;
     this.duration = duration;
     this.status = status;
     this.client = client;
-    this.treatment = treatment;
+    this.treatments = treatments;
+    this.clientNotes = clientNotes
   }
 }

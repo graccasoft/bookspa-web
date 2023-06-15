@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import {TreatmentService} from "../../service/treatment.service";
 import {Tenant} from "../../model/tenant";
 import {Treatment} from "../../model/treatment";
 import {Client} from "../../model/client";
@@ -10,6 +9,7 @@ import {MatChipListboxChange} from "@angular/material/chips";
 import {Utils} from "../../utils/utils";
 import {FormBuilder, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
+import { CategorisedTreatments } from 'src/app/model/categorised-treatments';
 
 @Component({
   selector: 'app-reserve-public',
@@ -19,10 +19,10 @@ import {Router} from "@angular/router";
 export class ReservePublicComponent {
 
   tenant: Tenant = new Tenant(1)
-  treatments: Treatment[] = []
-  treatment!: Treatment  //= new Treatment(0,'','',0,0,0,this.tenant)
+  treatmentCategories: CategorisedTreatments[] = []
+  bookingTreatments: Treatment[] = []  //= new Treatment(0,'','',0,0,0,this.tenant)
   client: Client = new Client(0,'','','','','','','',this.tenant)
-  booking: Booking = new Booking(0,new Date(), new Date(),0,'NEW', this.client,this.treatment)
+  booking: Booking = new Booking(0,new Date(), new Date(),0,'NEW', this.client,this.bookingTreatments,'')
   tomorrow = new Date()
   availableTimeSlots: String[] = []
   selectedTimeSlot! : String
@@ -30,7 +30,6 @@ export class ReservePublicComponent {
 
   firstFormGroup = this._formBuilder.group({
     treatmentCtrl: ['', Validators.required],
-    durationCtrl: ['', Validators.min(15)],
   });
   secondFormGroup = this._formBuilder.group({
     timeSlotCtrl: ['', Validators.required],
@@ -40,6 +39,8 @@ export class ReservePublicComponent {
     lastNameCtrl: ['', Validators.required],
     emailCtrl: ['', Validators.required],
     phoneNumberCtrl: ['', Validators.required],
+    addressCtrl: [''],
+    notesCtrl: [''],
   });
   constructor(
     private bookingService: BookingService,
@@ -53,12 +54,21 @@ export class ReservePublicComponent {
     this.tomorrow.setDate(this.tomorrow.getDate() + 1)
     this.fetchTreatments()
   }
+
+  calculateTotalAmount():number{
+    return this.bookingTreatments.reduce((previousValue, currentValue)=> {return previousValue + currentValue.price}, 0)
+  }
   fetchTreatments(){
-    this.bookingService.getTreatments(this.tenant.id)
-      .subscribe(treatments => this.treatments = treatments)
+    this.bookingService.getCategorisedTreatments(this.tenant.id)
+      .subscribe(treatments => this.treatmentCategories = treatments)
   }
 
   fetchTimeSlots(date:Date){
+
+    this.booking.duration = this.bookingTreatments.reduce((previousValue, currentValue) =>
+    { return previousValue + currentValue.minimumDuration }, 0)
+
+
     this.bookingService.getFreeTimeSlots(this.tenant.id, date, this.booking.duration)
       .subscribe(timeSlots=>{
         this.availableTimeSlots = []
@@ -82,11 +92,13 @@ export class ReservePublicComponent {
   }
 
   saveBooking(){
-    this.booking.treatment = this.treatment
+    this.booking.treatments = this.bookingTreatments
     this.bookingService.bookOnline(this.booking)
       .subscribe(booking=>{
         this._snackBar.open("Booking successfully submitted", "Ok")
         this._router.navigate(['booking-success'])
       })
   }
+
+  protected readonly Utils = Utils;
 }

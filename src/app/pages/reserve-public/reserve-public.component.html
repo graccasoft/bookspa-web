@@ -1,7 +1,7 @@
 <div class="container py-3">
   <header>
     <div class="d-flex flex-column flex-md-row align-items-center pb-3 mb-4 border-bottom">
-      <a href="/" class="d-flex align-items-center link-body-emphasis text-decoration-none">
+      <a class="d-flex align-items-center link-body-emphasis text-decoration-none" href="/">
         <img src="assets/red-kokia-logo.svg" width="100px">
       </a>
 
@@ -19,38 +19,40 @@
   <div>
     <div class="row mb-3">
       <div class="col-md-8 col-sm-12  mx-auto text-center ">
-        <mat-stepper orientation="vertical"  #stepper linear="true">
+        <mat-stepper #stepper  linear="true" orientation="vertical">
           <mat-step [stepControl]="firstFormGroup">
             <form [formGroup]="firstFormGroup">
               <ng-template matStepLabel>Book Now</ng-template>
               <div class="row  mt-4">
-                <div class="col-md-8 col-sm-12">
+                <div class="col-md-7 col-sm-12">
                   <mat-form-field class="w-100">
                     <mat-label>Select Package</mat-label>
-                    <mat-select [(ngModel)]="treatment" name = "treatment" formControlName="treatmentCtrl" required >
-                      <mat-option *ngFor="let treatment of treatments" [value]="treatment"  >
-                        {{treatment.name}}
-                      </mat-option>
+                    <mat-select [(ngModel)]="bookingTreatments" formControlName="treatmentCtrl" multiple name = "bookingTreatments" required >
+
+                      <mat-optgroup *ngFor="let category of treatmentCategories" [label]="category.category.name">
+                        <mat-option *ngFor="let treatment of category.treatments" [value]="treatment">
+                          {{treatment.name}}
+                        </mat-option>
+                      </mat-optgroup>
+
                     </mat-select>
                   </mat-form-field>
                 </div>
 
-                <div class="col-md-4 col-sm-12">
-                  <mat-form-field class="w-100">
-                    <mat-label>Select Duration</mat-label>
-                    <mat-select [(ngModel)]="booking.duration" name = "duration" formControlName="durationCtrl" min="15" >
-                      <mat-option value="15" >15 Min</mat-option>
-                      <mat-option value="30" >30 Min</mat-option>
-                      <mat-option value="60" >1 Hr</mat-option>
-                      <mat-option value="90" >1 Hr 30 min</mat-option>
-                      <mat-option value="120" >2 Hrs</mat-option>
-                    </mat-select>
-                  </mat-form-field>
+                <div class="col-md-5 col-sm-12">
+                  <div class="w-full flex flex-col justify-between p-4 rounded border text-start">
+                    <div *ngFor="let treatment of bookingTreatments" class="mb-1">
+                      <strong>{{treatment.name}}</strong><br>
+                      {{ Utils.formatDuration(treatment.minimumDuration)}}
+                      <span class="float-end">{{ treatment.price | currency:'ZAR' }}</span>
+                    </div>
+                    <div *ngIf="bookingTreatments.length ==0">Please select at least one service from the list</div>
+                  </div>
                 </div>
               </div>
 
               <div class="text-end">
-                <button mat-button matStepperNext class="btn btn-primary border">Next</button>
+                <button class="btn btn-primary border" mat-button matStepperNext>Next</button>
               </div>
             </form>
           </mat-step>
@@ -60,20 +62,20 @@
               <div class="row">
                 <div class="col-md-8 col-sm-12">
                   <mat-card class="demo-inline-calendar-card mt-4">
-                    <mat-calendar [(selected)]="booking.bookingDate" [minDate]="tomorrow" (selectedChange)="fetchTimeSlots($event)"></mat-calendar>
+                    <mat-calendar (selectedChange)="fetchTimeSlots($event)" [(selected)]="booking.bookingDate" [minDate]="tomorrow"></mat-calendar>
                   </mat-card>
                 </div>
                 <div class="col-md-4 col-sm-12 pt-4">
                   <h6>Available timeslots</h6>
-                  <mat-chip-listbox aria-label="Available Timeslots" [(ngModel)]="selectedTimeSlot" name="selectedTimeSlot" (change)="timeSlotSelected($event)" formControlName="timeSlotCtrl" required>
+                  <mat-chip-listbox (change)="timeSlotSelected($event)" [(ngModel)]="selectedTimeSlot" aria-label="Available Timeslots" formControlName="timeSlotCtrl" name="selectedTimeSlot" required>
                     <mat-chip-option *ngFor="let timeSlot of availableTimeSlots" >{{timeSlot}}</mat-chip-option>
                   </mat-chip-listbox>
                 </div>
               </div>
 
               <div class="text-end">
-                <button mat-button matStepperPrevious class="btn btn-primary border me-4">Back</button>
-                <button mat-button matStepperNext class="btn btn-primary border">Next</button>
+                <button class="btn btn-primary border me-4" mat-button matStepperPrevious>Back</button>
+                <button class="btn btn-primary border" mat-button matStepperNext>Next</button>
               </div>
             </form>
           </mat-step>
@@ -85,13 +87,13 @@
                 <div class="col-md-6 col-sm-12">
                   <mat-form-field class="w-100">
                     <mat-label>First Name</mat-label>
-                    <input matInput [(ngModel)]="client.firstName" name="firstName" formControlName="firstNameCtrl" required>
+                    <input [(ngModel)]="client.firstName" formControlName="firstNameCtrl" matInput name="firstName" required>
                   </mat-form-field>
                 </div>
                 <div class="col-md-6 col-sm-12">
                   <mat-form-field class="w-100">
                     <mat-label>Last Name</mat-label>
-                    <input matInput [(ngModel)]="client.lastName" name="lastName" formControlName="lastNameCtrl" required>
+                    <input [(ngModel)]="client.lastName" formControlName="lastNameCtrl" matInput name="lastName" required>
                   </mat-form-field>
                 </div>
 
@@ -101,13 +103,13 @@
                 <div class="col-md-6 col-sm-12">
                   <mat-form-field class="w-100">
                     <mat-label>Email Address</mat-label>
-                    <input matInput [(ngModel)]="client.email" name="email" formControlName="emailCtrl" required>
+                    <input [(ngModel)]="client.email" formControlName="emailCtrl" matInput name="email" required>
                   </mat-form-field>
                 </div>
                 <div class="col-md-6 col-sm-12">
                   <mat-form-field class="w-100">
                     <mat-label>Phone Number</mat-label>
-                    <input matInput [(ngModel)]="client.phoneNumber" name="phoneNumber" formControlName="phoneNumberCtrl" required>
+                    <input [(ngModel)]="client.phoneNumber" formControlName="phoneNumberCtrl" matInput name="phoneNumber" required>
                   </mat-form-field>
                 </div>
               </div>
@@ -116,41 +118,80 @@
                 <div class="col-md-12 col-sm-12">
                   <mat-form-field class="w-100">
                     <mat-label>Address</mat-label>
-                    <input matInput [(ngModel)]="client.address" name="address">
+                    <input [(ngModel)]="client.address" formControlName="addressCtrl" matInput name="address">
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-12 col-sm-12">
+                  <mat-form-field class="w-100">
+                    <mat-label>Any special requests</mat-label>
+                    <input [(ngModel)]="booking.clientNotes" formControlName="notesCtrl" matInput name="notes">
                   </mat-form-field>
                 </div>
               </div>
 
               <div class="text-end">
-                <button mat-button matStepperPrevious class="btn btn-primary border me-4">Back</button>
-                <button mat-button matStepperNext class="btn btn-primary border">Next</button>
+                <button class="btn btn-primary border me-4" mat-button matStepperPrevious>Back</button>
+                <button class="btn btn-primary border" mat-button matStepperNext>Next</button>
               </div>
             </form>
           </mat-step>
           <mat-step>
             <ng-template matStepLabel>Confirm</ng-template>
 
-            <div *ngIf="treatment" class="text-start mb-4 mt-4">
-              <table class="table table-striped">
-                <tr class="p-2">
-                  <td>Treatment: <strong>{{treatment.name}}</strong></td>
-                  <td>Date: <strong>{{displayDate | date:'EEEE d MMMM y HH:mm'}}</strong></td>
-                </tr>
-                <tr class="p-2">
-                  <td>Your Name: <strong>{{client.firstName}} {{client.lastName}}</strong></td>
-                  <td>Email: <strong>{{client.email}}</strong></td>
-                </tr>
-                <tr class="p-2">
-                  <td>Phone: <strong>{{client.phoneNumber}}</strong></td>
-                  <td>Address: <strong>{{client.address}}</strong></td>
-                </tr>
-              </table>
+            <div *ngIf="bookingTreatments" class="text-start mb-4 mt-4">
+              <div class="row border-bottom bg-light mb-2">
+                <div class="col-md-6 col-sm-12">
+                  <h5 class="mb-1">Treatments</h5>
+                  <div *ngFor="let treatment of bookingTreatments" class="mb-1">
+                    <strong>{{treatment.name}}</strong>
+                    ( {{ Utils.formatDuration(treatment.minimumDuration)}} )
+                    <span class="float-end">{{ treatment.price | currency:'ZAR' }}</span>
+                  </div>
+                  <div>
+                    <strong>Total</strong>
+                    <span class="float-end">{{calculateTotalAmount() | currency:'ZAR'}}</span>
+                  </div>
+                </div>
+                <div class="col-md-6 col-sm-12">
+                  <h5 class="mb-1">Date and time</h5>
+                  <strong>{{displayDate | date:'EEEE d MMMM y HH:mm'}}</strong>
+                </div>
+              </div>
+              <div class="row border-bottom">
+                <div class="col-md-6 col-sm-12">
+                  <h5 class="mb-1">Your Name</h5>
+                  <strong>{{client.firstName}} {{client.lastName}}</strong>
+                </div>
+                <div class="col-md-6 col-sm-12">
+                  <h5 class="mb-1">Email</h5>
+                  <strong>{{client.email}}</strong>
+                </div>
+              </div>
+              <div class="row border-bottom bg-light pt-2 mb-2">
+                <div class="col-md-6 col-sm-12">
+                  <h5 class="mb-1">Phone Number</h5>
+                  <strong>{{client.phoneNumber}}</strong>
+                </div>
+                <div class="col-md-6 col-sm-12">
+                  <h5 class="mb-1">Address</h5>
+                  <strong>{{client.address}}</strong>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <h5 class="mb-1">Your Request</h5>
+                  <strong>{{booking.clientNotes}}</strong>
+                </div>
+              </div>
 
             </div>
 
             <div class="text-end">
-              <button mat-button matStepperPrevious class="btn btn-primary border me-4">Back</button>
-              <button mat-button (click)="saveBooking()" class="btn btn-primary border">Confirm Booking</button>
+              <button class="btn btn-primary border me-4" mat-button matStepperPrevious>Back</button>
+              <button (click)="saveBooking()" class="btn btn-primary border" mat-button>Confirm Booking</button>
             </div>
           </mat-step>
         </mat-stepper>

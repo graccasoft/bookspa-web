@@ -15,7 +15,9 @@
       <tr *ngFor="let booking of bookings">
         <td>{{ booking.bookingDate | date:'EEEE d MMMM y' }}</td>
         <td>{{ booking.bookingDate | date: 'HH:mm' }}</td>
-        <td>{{ booking.treatment.name }}</td>
+        <td>
+          <p *ngFor="let treatment of booking.treatments">{{treatment.name}}</p>
+        </td>
         <td>
           {{booking.client.firstName + ' ' + booking.client.lastName}}<br>
           {{ booking.client.phoneNumber }}

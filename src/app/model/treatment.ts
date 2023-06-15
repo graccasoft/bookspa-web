@@ -1,4 +1,5 @@
 import {Tenant} from "./tenant";
+import {TreatmentCategory} from "./treatment-category";
 
 export class Treatment {
   id: number
@@ -8,6 +9,7 @@ export class Treatment {
   minimumDuration: number
   maximumDuration: number
   tenant: Tenant
+  category?:TreatmentCategory
 
   constructor(id: number, name: string, description: string, price: number, minimumDuration: number, maximumDuration: number,tenant: Tenant) {
     this.id = id;
