@@ -31,6 +31,12 @@
         </a>
       </li>
       <li>
+        <a [routerLink]="['/employees']" class="nav-link text-white" [ngClass]="{'active': activeMenu === 'employees'}">
+          <mat-icon class="me-2">spa</mat-icon>
+          Employees
+        </a>
+      </li>
+      <li>
         <a [routerLink]="['/customers']" class="nav-link text-white" [ngClass]="{'active': activeMenu === 'customers'}">
           <mat-icon class="me-2">groups</mat-icon>
           Customers

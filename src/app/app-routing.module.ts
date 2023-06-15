@@ -9,12 +9,14 @@ import {
   ReservePublicConfirmationComponent
 } from "./pages/reserve-public-confirmation/reserve-public-confirmation.component";
 import {LoginComponent} from "./pages/login/login.component";
+import {EmployeesComponent} from "./pages/employees/employees.component";
 
 const routes: Routes = [
   {path:'reserve', component:ReserveComponent},
-  {path:'reservations', component:ReservationsComponent},
-  {path:'treatments', component:TreatmentsComponent},
-  {path:'customers', component:CustomersComponent},
+  {path:'reservations', component:ReservationsComponent, title:'BlackKokia - Reservations'},
+  {path:'treatments', component:TreatmentsComponent, title:'BlackKokia - Treatments'},
+  {path:'customers', component:CustomersComponent, title:'BlackKokia - Customers'},
+  {path:'employees', component:EmployeesComponent, title:'BlackKokia - Employees'},
   {path:'online-booking', component:ReservePublicComponent, title:'Online Booking - BlackKokia'},
   {path:'booking-success', component:ReservePublicConfirmationComponent, title:'Online Booking - BlackKokia'},
   {path:'login', component:LoginComponent, title:'Client Login - BlackKokia'},

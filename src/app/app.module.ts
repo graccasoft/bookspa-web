@@ -23,6 +23,7 @@ import { ReservationsComponent } from './pages/reservations/reservations.compone
 import {MatMenuModule} from "@angular/material/menu";
 import { TreatmentsComponent } from './pages/treatments/treatments.component';
 import { TreatmentsFormDialog } from "./pages/treatments/treatments.component";
+import { EmployeesFormDialog } from "./pages/employees/employees.component";
 import {MatDialogModule} from "@angular/material/dialog";
 import { CustomersComponent } from './pages/customers/customers.component';
 import {CustomersFormDialog} from "./pages/customers/customers.component";
@@ -34,6 +35,7 @@ import {MatStepperModule} from "@angular/material/stepper";
 import { ReservePublicConfirmationComponent } from './pages/reserve-public-confirmation/reserve-public-confirmation.component';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 import { LoginComponent } from './pages/login/login.component';
+import { EmployeesComponent } from './pages/employees/employees.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -47,7 +49,9 @@ import { LoginComponent } from './pages/login/login.component';
     ReservePublicComponent,
     ReservePublicConfirmationComponent,
     ConfirmDialogComponent,
-    LoginComponent
+    LoginComponent,
+    EmployeesComponent,
+    EmployeesFormDialog
   ],
   imports: [
     BrowserModule,

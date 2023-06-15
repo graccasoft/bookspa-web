@@ -1,0 +1,35 @@
+<h2 mat-dialog-title>Employee Form</h2>
+<mat-dialog-content>
+  <form (ngSubmit)="saveEmployee()" #employeeForm="ngForm">
+    <div class="row">
+      <div class="col-sm-12 col-md-6">
+        <mat-form-field class="w-100">
+          <mat-label>Employee First name</mat-label>
+          <input matInput [(ngModel)]="employee.firstName" name="firstName">
+        </mat-form-field>
+      </div>
+      <div class="col-sm-12 col-md-6">
+        <mat-form-field class="w-100">
+          <mat-label>Employee Surname</mat-label>
+          <input matInput [(ngModel)]="employee.surname" name="surname">
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12 col-md-6">
+        <mat-form-field class="w-100">
+          <mat-label>Phone Number</mat-label>
+          <input matInput [(ngModel)]="employee.phoneNumber" name="phoneNumber">
+        </mat-form-field>
+      </div>
+
+    </div>
+
+  </form>
+
+
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-button (click)="saveEmployee()">Save</button>
+</mat-dialog-actions>
