@@ -8,6 +8,7 @@ import {ReservePublicComponent} from "./pages/reserve-public/reserve-public.comp
 import {
   ReservePublicConfirmationComponent
 } from "./pages/reserve-public-confirmation/reserve-public-confirmation.component";
+import {LoginComponent} from "./pages/login/login.component";
 
 const routes: Routes = [
   {path:'reserve', component:ReserveComponent},
@@ -16,6 +17,7 @@ const routes: Routes = [
   {path:'customers', component:CustomersComponent},
   {path:'online-booking', component:ReservePublicComponent, title:'Online Booking - BlackKokia'},
   {path:'booking-success', component:ReservePublicConfirmationComponent, title:'Online Booking - BlackKokia'},
+  {path:'login', component:LoginComponent, title:'Client Login - BlackKokia'},
 ];
 
 @NgModule({

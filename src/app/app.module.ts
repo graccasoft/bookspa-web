@@ -33,6 +33,7 @@ import { ReservePublicComponent } from './pages/reserve-public/reserve-public.co
 import {MatStepperModule} from "@angular/material/stepper";
 import { ReservePublicConfirmationComponent } from './pages/reserve-public-confirmation/reserve-public-confirmation.component';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
+import { LoginComponent } from './pages/login/login.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -45,7 +46,8 @@ import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.componen
     CustomersFormDialog,
     ReservePublicComponent,
     ReservePublicConfirmationComponent,
-    ConfirmDialogComponent
+    ConfirmDialogComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,

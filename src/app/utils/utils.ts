@@ -21,4 +21,17 @@ export class Utils {
 
     return hour + ':' + minutes;
   }
+
+  static toHoursAndMinutes(totalMinutes: number): { hours: number, minutes: number } {
+    const hours = Math.floor(totalMinutes / 60);
+    const minutes = totalMinutes % 60;
+    return { hours, minutes };
+  }
+
+  static formatDuration(totalMinutes:number): string{
+    const { hours, minutes } = Utils.toHoursAndMinutes(totalMinutes);
+    if( hours == 0) return `${minutes} mins`
+    if( minutes == 0) return `${hours} hr`
+    return `${hours} hr, ${minutes} mins`
+  }
 }
