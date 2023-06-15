@@ -10,13 +10,16 @@ import {
 } from "./pages/reserve-public-confirmation/reserve-public-confirmation.component";
 import {LoginComponent} from "./pages/login/login.component";
 import {EmployeesComponent} from "./pages/employees/employees.component";
+import {AuthGuard} from "./helpers/auth.guard";
 
 const routes: Routes = [
-  {path:'reserve', component:ReserveComponent},
-  {path:'reservations', component:ReservationsComponent, title:'BlackKokia - Reservations'},
-  {path:'treatments', component:TreatmentsComponent, title:'BlackKokia - Treatments'},
-  {path:'customers', component:CustomersComponent, title:'BlackKokia - Customers'},
-  {path:'employees', component:EmployeesComponent, title:'BlackKokia - Employees'},
+  {path:'reserve', component:ReserveComponent, title:'BlackKokia - Quick Reservation', canActivate: [AuthGuard]},
+  {path:'reservations', component:ReservationsComponent, title:'BlackKokia - Reservations', canActivate: [AuthGuard]},
+  {path:'treatments', component:TreatmentsComponent, title:'BlackKokia - Treatments', canActivate: [AuthGuard]},
+  {path:'customers', component:CustomersComponent, title:'BlackKokia - Customers', canActivate: [AuthGuard]},
+  {path:'employees', component:EmployeesComponent, title:'BlackKokia - Employees', canActivate: [AuthGuard]},
+
+
   {path:'online-booking', component:ReservePublicComponent, title:'Online Booking - BlackKokia'},
   {path:'booking-success', component:ReservePublicConfirmationComponent, title:'Online Booking - BlackKokia'},
   {path:'login', component:LoginComponent, title:'Client Login - BlackKokia'},

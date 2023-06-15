@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import {AccountsService} from "../../service/accounts.service";
 import {first} from "rxjs";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-login',
@@ -15,7 +16,8 @@ export class LoginComponent {
 
   constructor(
     private accountsService: AccountsService,
-    private _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
+    private router: Router,
   ) {
   }
 
@@ -25,6 +27,7 @@ export class LoginComponent {
       .subscribe({
         next: () => {
           this._snackBar.open("Logged in successfully", "Ok")
+          this.router.navigate(['/reservations'], { });
         },
         error: error => {
           this._snackBar.open("Log in failed", "Ok")

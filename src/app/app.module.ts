@@ -27,7 +27,7 @@ import { EmployeesFormDialog } from "./pages/employees/employees.component";
 import {MatDialogModule} from "@angular/material/dialog";
 import { CustomersComponent } from './pages/customers/customers.component';
 import {CustomersFormDialog} from "./pages/customers/customers.component";
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import { ReservePublicComponent } from './pages/reserve-public/reserve-public.component';
@@ -36,6 +36,8 @@ import { ReservePublicConfirmationComponent } from './pages/reserve-public-confi
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 import { LoginComponent } from './pages/login/login.component';
 import { EmployeesComponent } from './pages/employees/employees.component';
+import {JwtInterceptor} from "./helpers/jwt.interceptor";
+import {ErrorInterceptor} from "./helpers/error.interceptor";
 @NgModule({
   declarations: [
     AppComponent,
@@ -78,7 +80,10 @@ import { EmployeesComponent } from './pages/employees/employees.component';
     MatStepperModule,
     ReactiveFormsModule
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -4,6 +4,8 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 import {Employee} from "../../model/employee";
 import {EmployeesService} from "../../service/employees.service";
 import {Tenant} from "../../model/tenant";
+import {AccountsService} from "../../service/accounts.service";
+import {User} from "../../model/user";
 
 @Component({
   selector: 'app-employees',
@@ -12,12 +14,24 @@ import {Tenant} from "../../model/tenant";
 })
 export class EmployeesComponent {
   employees: Employee[] = []
-  tenant: Tenant = new Tenant(1)
+
+  tenant!: Tenant
+
   employee: Employee = new Employee(0,'','','',false, this.tenant)
-  constructor(public dialog: MatDialog, private treatmentService: EmployeesService) {}
+  constructor(
+    public dialog: MatDialog,
+    private treatmentService: EmployeesService,
+    private accountsService: AccountsService
+  ) {}
 
   ngOnInit(){
     this.fetchEmployees()
+    const user = this.accountsService.userValue;
+    if (user) {
+      if (user.tenant instanceof Tenant) {
+        this.tenant = user.tenant
+      }
+    }
   }
 
   fetchEmployees(){
@@ -30,6 +44,7 @@ export class EmployeesComponent {
     this.employee = this.employees.filter(t=>  t.id === id)[0]
   }
 
+  toggleAvailability(id:number){}
   newEmployee(){
     this.employee = new Employee(0,'','','',false, this.tenant)
     this.openDialog()
@@ -39,7 +54,7 @@ export class EmployeesComponent {
     this.openDialog()
   }
   openDialog() {
-    const dialogRef = this.dialog.open(EmployeesFormDialog,{width:"50%",data:{treatment: this.employee}});
+    const dialogRef = this.dialog.open(EmployeesFormDialog,{width:"50%",data:{employee: this.employee}});
 
     dialogRef.afterClosed().subscribe(result => {
       this.fetchEmployees()
