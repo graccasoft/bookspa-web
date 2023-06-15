@@ -5,6 +5,8 @@ import {Tenant} from "../../model/tenant";
 import { MatDialog } from '@angular/material/dialog';
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {ConfirmDialogComponent} from "../../confirm-dialog/confirm-dialog.component";
+import {AccountsService} from "../../service/accounts.service";
+import {User} from "../../model/user";
 
 @Component({
   selector: 'app-reservations',
@@ -13,21 +15,28 @@ import {ConfirmDialogComponent} from "../../confirm-dialog/confirm-dialog.compon
 })
 export class ReservationsComponent {
 
-  tenant : Tenant = new Tenant(1)
+  tenant! : Tenant | undefined
   bookings: Booking[] = []
 
   constructor(
     private bookingService: BookingService,
     private dialog: MatDialog,
-    private _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
+    private accountsService: AccountsService
   ) {
   }
 
   ngOnInit(){
-    this.fetchBookings()
+    const user = this.accountsService.userValue as User
+    if (user) {
+      this.tenant = user.tenant
+      console.log(user)
+      this.fetchBookings()
+    }
   }
 
   fetchBookings(){
+    // @ts-ignore
     this.bookingService.getTenantBookings(this.tenant.id)
       .subscribe(bookings=> this.bookings = bookings)
   }

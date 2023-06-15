@@ -1,6 +1,10 @@
 import { Component } from '@angular/core';
-import {TreatmentsFormDialog} from "../treatments/treatments.component";
 import {MatDialog} from "@angular/material/dialog";
+import {ClientsService} from "../../service/clients.service";
+import {AccountsService} from "../../service/accounts.service";
+import {Tenant} from "../../model/tenant";
+import {Client} from "../../model/client";
+import {User} from "../../model/user";
 
 @Component({
   selector: 'app-customers',
@@ -8,7 +12,28 @@ import {MatDialog} from "@angular/material/dialog";
   styleUrls: ['./customers.component.css']
 })
 export class CustomersComponent {
-  constructor(public dialog: MatDialog) {}
+  tenant!: Tenant | undefined
+  clients: Client[] = []
+  constructor(
+    public dialog: MatDialog,
+    private clientsService: ClientsService,
+    private accountsService: AccountsService
+  ) {}
+
+  ngOnInit(){
+    const user = this.accountsService.userValue as User;
+    if (user) {
+      this.tenant = user.tenant
+      this.fetchCustomers()
+    }
+
+  }
+
+  fetchCustomers(){
+    // @ts-ignore
+    this.clientsService.get(this.tenant.id)
+      .subscribe(clients => this.clients = clients)
+  }
   openDialog() {
     const dialogRef = this.dialog.open(CustomersFormDialog,{width:"50%"});
 

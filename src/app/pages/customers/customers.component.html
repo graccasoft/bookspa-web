@@ -9,17 +9,15 @@
       <th>Name</th>
       <th>Phone</th>
       <th>Address</th>
-      <th>Status</th>
       <th class="text-right">Actions</th>
     </tr>
     </thead>
     <tbody>
-    <tr>
-      <td>1</td>
-      <td>G Mashasha</td>
-      <td>263779302259</td>
-      <td>13601 Madokero</td>
-      <td>Confirmed</td>
+    <tr *ngFor="let client of clients">
+      <td>{{client.id}}</td>
+      <td>{{client.firstName + ' ' + client.surname}}</td>
+      <td>{{client.phoneNumber}}</td>
+      <td>{{client.address}}</td>
       <td class="text-right">
         <button mat-button [matMenuTriggerFor]="menu" mat-raised-button color="primary">Actions</button>
         <mat-menu #menu="matMenu">

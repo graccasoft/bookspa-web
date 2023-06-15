@@ -7,6 +7,8 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 import {TreatmentCategory} from "../../model/treatment-category";
 import {CategoryService} from "../../service/category.service";
 import { Utils } from 'src/app/utils/utils';
+import {AccountsService} from "../../service/accounts.service";
+import {User} from "../../model/user";
 
 @Component({
   selector: 'app-treatments',
@@ -16,11 +18,17 @@ import { Utils } from 'src/app/utils/utils';
 export class TreatmentsComponent {
   protected readonly Utils = Utils;
   treatments: Treatment[] = []
-  tenant: Tenant = new Tenant(1)
-  treatment: Treatment = new Treatment(0,'','',0,0,0, this.tenant)
-  constructor(public dialog: MatDialog, private treatmentService: TreatmentService) {}
+  tenant!: Tenant | undefined
+  treatment: Treatment = new Treatment(0,'','',0,0,0, <Tenant>this.tenant)
+  constructor(
+    public dialog: MatDialog,
+    private treatmentService: TreatmentService,
+    private accountsService: AccountsService
+  ) {}
 
   ngOnInit(){
+    const user = this.accountsService.userValue as User
+    this.tenant = user.tenant
     this.fetchTreatments()
   }
 
@@ -35,7 +43,7 @@ export class TreatmentsComponent {
   }
 
   newTreatment(){
-    this.treatment = new Treatment(0,'','',0,0,0, this.tenant)
+    this.treatment = new Treatment(0,'','',0,0,0, <Tenant>this.tenant)
     this.openDialog()
   }
   editTreatment(id:number){

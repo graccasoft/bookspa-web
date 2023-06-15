@@ -15,9 +15,9 @@ import {User} from "../../model/user";
 export class EmployeesComponent {
   employees: Employee[] = []
 
-  tenant!: Tenant
+  tenant!: Tenant | undefined
 
-  employee: Employee = new Employee(0,'','','',false, this.tenant)
+  employee: Employee = new Employee(0,'','','',false, <Tenant>this.tenant)
   constructor(
     public dialog: MatDialog,
     private treatmentService: EmployeesService,
@@ -25,17 +25,14 @@ export class EmployeesComponent {
   ) {}
 
   ngOnInit(){
+    const user = this.accountsService.userValue as User;
+    this.tenant = user.tenant
     this.fetchEmployees()
-    const user = this.accountsService.userValue;
-    if (user) {
-      if (user.tenant instanceof Tenant) {
-        this.tenant = user.tenant
-      }
-    }
   }
 
   fetchEmployees(){
-    this.treatmentService.get(1).subscribe((employees)=>{
+    // @ts-ignore
+    this.treatmentService.get(this.tenant.id).subscribe((employees)=>{
       this.employees = employees
     })
   }
@@ -46,7 +43,7 @@ export class EmployeesComponent {
 
   toggleAvailability(id:number){}
   newEmployee(){
-    this.employee = new Employee(0,'','','',false, this.tenant)
+    this.employee = new Employee(0,'','','',false, <Tenant>this.tenant)
     this.openDialog()
   }
   editEmployee(id:number){
