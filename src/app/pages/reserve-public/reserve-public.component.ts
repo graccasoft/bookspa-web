@@ -8,7 +8,7 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 import {MatChipListboxChange} from "@angular/material/chips";
 import {Utils} from "../../utils/utils";
 import {FormBuilder, Validators} from "@angular/forms";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import { CategorisedTreatments } from 'src/app/model/categorised-treatments';
 
 @Component({
@@ -18,7 +18,7 @@ import { CategorisedTreatments } from 'src/app/model/categorised-treatments';
 })
 export class ReservePublicComponent {
 
-  tenant: Tenant = new Tenant(1)
+  tenant!: Tenant
   treatmentCategories: CategorisedTreatments[] = []
   bookingTreatments: Treatment[] = []  //= new Treatment(0,'','',0,0,0,this.tenant)
   client: Client = new Client(0,'','','','','','','',this.tenant)
@@ -27,6 +27,8 @@ export class ReservePublicComponent {
   availableTimeSlots: String[] = []
   selectedTimeSlot! : String
   displayDate = new Date()
+
+  tawkScriptElement: HTMLScriptElement;
 
   firstFormGroup = this._formBuilder.group({
     treatmentCtrl: ['', Validators.required],
@@ -46,13 +48,32 @@ export class ReservePublicComponent {
     private bookingService: BookingService,
     private _snackBar: MatSnackBar,
     private _formBuilder: FormBuilder,
-    private _router: Router
+    private _router: Router,
+    private activatedRoute: ActivatedRoute,
   ) {
+    this.tawkScriptElement = document.createElement("script");
+    this.tawkScriptElement.src = "https://embed.tawk.to/6480447194cf5d49dc5c47d6/1h2agmong";
+    this.tawkScriptElement.crossOrigin = "*"
+    this.tawkScriptElement.async = true
+    this.tawkScriptElement.charset = "UTF-8"
+    document.body.appendChild(this.tawkScriptElement);
   }
 
   ngOnInit(){
+
+    this.activatedRoute.params.subscribe(s => {
+      console.log(s["reference"])
+      this.bookingService.getTenant(s["reference"]).subscribe(
+        tenant=>{
+          this.tenant = tenant
+          this.fetchTreatments()
+        }
+      )
+    });
+
+
     this.tomorrow.setDate(this.tomorrow.getDate() + 1)
-    this.fetchTreatments()
+
   }
 
   calculateTotalAmount():number{

@@ -12,7 +12,7 @@
     </div>
 
     <div class="pricing-header p-3 pb-md-4 mx-auto">
-      <h1 class="display-4 fw-normal text-body-emphasis">BOOK AN APPOINTMENT</h1>
+      <h1 class="display-4 fw-normal text-body-emphasis">BOOK AN APPOINTMENT <span *ngIf="tenant">| {{tenant.companyName}}</span> </h1>
    </div>
   </header>
 
@@ -231,3 +231,4 @@
     </div>
   </footer>
 </div>
+

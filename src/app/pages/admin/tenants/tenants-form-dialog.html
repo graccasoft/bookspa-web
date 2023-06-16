@@ -1,0 +1,56 @@
+<h2 mat-dialog-title>Tenant Form</h2>
+<mat-dialog-content>
+  <form (ngSubmit)="saveTenant()" #tenantForm="ngForm">
+    <div class="row">
+      <div class="col-sm-12 col-md-6">
+        <mat-form-field class="w-100">
+          <mat-label>Spa Name</mat-label>
+          <input matInput [(ngModel)]="tenant.companyName" name="firstName">
+        </mat-form-field>
+      </div>
+      <div class="col-sm-12 col-md-6">
+        <mat-form-field class="w-100">
+          <mat-label>Spa Phone Number</mat-label>
+          <input matInput [(ngModel)]="tenant.companyPhone" name="phoneNumber">
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-12 col-md-6">
+        <mat-form-field class="w-100">
+          <mat-label>Spa Email</mat-label>
+          <input matInput [(ngModel)]="tenant.companyEmail" name="email">
+        </mat-form-field>
+      </div>
+      <div class="col-sm-12 col-md-6">
+        <mat-form-field class="w-100">
+          <mat-label>Spa Address</mat-label>
+          <input matInput [(ngModel)]="tenant.companyAddress" name="address">
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-12 col-md-6">
+        <mat-form-field class="w-100">
+          <mat-label>Contact Person Name</mat-label>
+          <input matInput [(ngModel)]="tenant.contactName" name="contactName">
+        </mat-form-field>
+      </div>
+      <div class="col-sm-12 col-md-6">
+        <mat-form-field class="w-100">
+          <mat-label>Contact Person Phone</mat-label>
+          <input matInput [(ngModel)]="tenant.contactPhone" name="contactPhone">
+        </mat-form-field>
+      </div>
+    </div>
+
+  </form>
+
+
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-button (click)="saveTenant()">Save</button>
+</mat-dialog-actions>

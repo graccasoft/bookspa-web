@@ -33,7 +33,8 @@ export class TreatmentsComponent {
   }
 
   fetchTreatments(){
-    this.treatmentService.get(1).subscribe((treatments)=>{
+    // @ts-ignore
+    this.treatmentService.get(this.tenant.id).subscribe((treatments)=>{
       this.treatments = treatments
     })
   }

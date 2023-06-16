@@ -38,6 +38,12 @@ import { LoginComponent } from './pages/login/login.component';
 import { EmployeesComponent } from './pages/employees/employees.component';
 import {JwtInterceptor} from "./helpers/jwt.interceptor";
 import {ErrorInterceptor} from "./helpers/error.interceptor";
+import { TenantsComponent } from './pages/admin/tenants/tenants.component';
+import {TenantsFormDialog} from "./pages/admin/tenants/tenants.component";
+import { UsersComponent } from './pages/admin/users/users.component';
+import {UsersFormDialog} from "./pages/admin/users/users.component";
+import { AdminLayoutComponent } from './pages/admin/admin-layout/admin-layout.component';
+import { TenantSettingsComponent } from './pages/tenant-settings/tenant-settings.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -53,7 +59,13 @@ import {ErrorInterceptor} from "./helpers/error.interceptor";
     ConfirmDialogComponent,
     LoginComponent,
     EmployeesComponent,
-    EmployeesFormDialog
+    EmployeesFormDialog,
+    TenantsComponent,
+    TenantsFormDialog,
+    UsersComponent,
+    UsersFormDialog,
+    AdminLayoutComponent,
+    TenantSettingsComponent
   ],
   imports: [
     BrowserModule,

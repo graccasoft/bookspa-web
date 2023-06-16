@@ -1,0 +1,44 @@
+<app-admin-layout [activeMenu]="'tenants'" >
+
+  <button mat-raised-button color="primary" (click)="newTenant()" class="mb-4" >
+    Add Tenant
+  </button>
+  <table class="table table-striped table-bordered">
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Phone Number</th>
+      <th>Email</th>
+      <th>Contact</th>
+      <th>Reference</th>
+      <th>Subscription Status</th>
+      <th class="text-right">Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor=" let tenant of tenants">
+      <td>{{ tenant.id }}</td>
+      <td>{{ tenant.companyName }}</td>
+      <td>{{ tenant.companyPhone }}</td>
+      <td>{{tenant.companyEmail}}</td>
+      <td>
+        {{tenant.contactName}}<br>
+        {{tenant.companyPhone}}
+      </td>
+      <td>{{tenant.reference}}</td>
+      <td><span class="badge text-bg-success">Active</span></td>
+      <td class="text-right">
+        <button mat-button [matMenuTriggerFor]="menu" mat-raised-button color="primary">Actions</button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item data-bs-toggle="modal" data-bs-target="#treatment-form" (click)="editTenant(tenant.id)">Edit</button>
+          <a mat-menu-item href="users/{{tenant.id}}" >Users</a>
+          <button mat-menu-item>Delete</button>
+        </mat-menu>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+
+</app-admin-layout>

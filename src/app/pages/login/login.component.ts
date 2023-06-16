@@ -25,9 +25,12 @@ export class LoginComponent {
     this.accountsService.login(this.username, this.password)
       .pipe(first())
       .subscribe({
-        next: () => {
+        next: (user) => {
           this._snackBar.open("Logged in successfully", "Ok")
-          this.router.navigate(['/reservations'], { });
+          if( user.role == "SUPER_ADMIN" )
+            this.router.navigate(['/tenants'], { });
+          else
+            this.router.navigate(['/reservations'], { });
         },
         error: error => {
           this._snackBar.open("Log in failed", "Ok")

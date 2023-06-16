@@ -6,6 +6,7 @@ import {TimeSlot} from "../model/time-slot";
 import {Utils} from "../utils/utils";
 import {Treatment} from "../model/treatment";
 import {CategorisedTreatments} from "../model/categorised-treatments";
+import {Tenant} from "../model/tenant";
 
 @Injectable({
   providedIn: 'root'
@@ -42,5 +43,9 @@ export class BookingService {
 
   getCategorisedTreatments(tenantId: number): Observable<CategorisedTreatments[]> {
     return this.http.get<CategorisedTreatments[]>(`${this.onlineBookingApiUrl}/categorised-treatments?tenantId=${tenantId}`);
+  }
+
+  getTenant(reference: string): Observable<Tenant> {
+    return this.http.get<Tenant>(`${this.onlineBookingApiUrl}/tenants?reference=${reference}`);
   }
 }

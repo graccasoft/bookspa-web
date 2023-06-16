@@ -19,7 +19,7 @@
         </a>
       </li>
       <li>
-        <a href="#" class="nav-link text-white">
+        <a [routerLink]="['/treatments']" class="nav-link text-white">
           <mat-icon class="me-2">sell</mat-icon>
           Promotions
         </a>
@@ -46,19 +46,19 @@
     <hr>
   </div>
 
-  <div class="container-fluid">
+  <div class="container-fluid" style="overflow: auto">
 
     <div class="container">
       <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
         <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
-          <span class="fs-4">RedKokia Backoffice</span>
+          <span class="fs-4" *ngIf="tenant">{{tenant.companyName}} Backoffice</span>
         </a>
 
         <ul class="nav nav-pills">
 
-          <li class="nav-item"><a href="#" class="nav-link">Settings</a></li>
+          <li class="nav-item"><a href="/settings" class="nav-link">Settings</a></li>
           <li class="nav-item">
-            <a href="#" class="nav-link" (click)="logout()" >Log Out</a>
+            <a href="/logout" class="nav-link" (click)="logout()" >Log Out</a>
           </li>
         </ul>
       </header>
