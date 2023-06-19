@@ -21,6 +21,7 @@ export class ReservePublicComponent {
 
   tenant!: Tenant
   treatmentCategories: CategorisedTreatments[] = []
+  filteredCategories: CategorisedTreatments[] = []
   bookingTreatments: Treatment[] = []  //= new Treatment(0,'','',0,0,0,this.tenant)
   client: Client = new Client(0,'','','','','','','',this.tenant)
   booking: Booking = new Booking(0,new Date(), new Date(),0,'NEW', this.client,this.bookingTreatments,'')
@@ -80,8 +81,12 @@ export class ReservePublicComponent {
   }
   fetchTreatments(){
     this.bookingService.getCategorisedTreatments(this.tenant.id)
-      .subscribe(treatments => this.treatmentCategories = treatments)
+      .subscribe(treatments => {
+        this.treatmentCategories = treatments
+        this.searchTreatments("")
+      })
   }
+
 
   fetchTimeSlots(date:Date){
 
@@ -120,5 +125,31 @@ export class ReservePublicComponent {
       })
   }
 
+
+  searchTreatmentsKeyup(event: any){
+    let filter = event.target.value;
+    this.searchTreatments(filter)
+  }
+  searchTreatments(filter: string) {
+    
+    let tmpFilter: CategorisedTreatments[] = []
+    let treatments: Treatment[] = []
+    let tmpAll = JSON.parse(JSON.stringify( this.treatmentCategories ))
+    tmpAll.map((treatment: CategorisedTreatments)=>{
+      if( filter == ""){
+        treatments = treatment.treatments
+      }else{
+        treatments = treatment.treatments.filter( t => {return t.name.toLowerCase().includes(filter)} )
+      }
+      if( treatments.length > 0 ){
+        let categoryToAdd = treatment;
+        treatment.treatments = treatments
+        tmpFilter.push( categoryToAdd ) 
+      }
+    })
+    console.log(this.treatmentCategories)
+
+    this.filteredCategories =  tmpFilter;
+  }
   protected readonly Utils = Utils;
 }

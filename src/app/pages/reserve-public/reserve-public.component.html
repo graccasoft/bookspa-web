@@ -6,8 +6,7 @@
       </a>
 
       <nav class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
-        <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="#">Home</a>
-        <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="#">Client Login</a>
+        <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="https://redkokia.com/">Home</a>
       </nav>
     </div>
 
@@ -28,8 +27,8 @@
                   <mat-form-field class="w-100">
                     <mat-label>Select Package</mat-label>
                     <mat-select [(ngModel)]="bookingTreatments" formControlName="treatmentCtrl" multiple name = "bookingTreatments" required >
-
-                      <mat-optgroup *ngFor="let category of treatmentCategories" [label]="category.category.name">
+                      <input (keyup)="searchTreatmentsKeyup($event)" name="treatmentFilter" class="form-control" placeholder="Search for treatment">
+                      <mat-optgroup  *ngFor="let category of filteredCategories"  [label]="category.category.name">
                         <mat-option *ngFor="let treatment of category.treatments" [value]="treatment">
                           {{treatment.name}}
                         </mat-option>

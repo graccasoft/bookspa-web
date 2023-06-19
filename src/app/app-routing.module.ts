@@ -30,10 +30,10 @@ const routes: Routes = [
   {path:'users/:tenantId', component:UsersComponent, title:'BlackKokia - Tenant Users', canActivate: [SuperAuthGuard]},
 
   //public
-  {path:'online-booking/:reference', component:ReservePublicComponent, title:'Online Booking - BlackKokia'},
-  {path:'booking-success', component:ReservePublicConfirmationComponent, title:'Online Booking - BlackKokia'},
-  {path:'login', component:LoginComponent, title:'Client Login - BlackKokia'},
-  {path:'**', component:LoginComponent, title:'Client Login - BlackKokia'},
+  {path:'online-booking/:reference', component:ReservePublicComponent, title:'Online Booking - RedKokia'},
+  {path:'booking-success', component:ReservePublicConfirmationComponent, title:'Online Booking - RedKokia'},
+  {path:'login', component:LoginComponent, title:'Client Login - RedKokia'},
+  {path:'**', component:LoginComponent, title:'Client Login - RedKokia'},
 ];
 
 @NgModule({

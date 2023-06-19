@@ -3,7 +3,7 @@
   <div class="row">
     <div class="col-md-8 col-sm-12" *ngIf="tenant">
 
-      <h3>Your online booking link: <a href="#" target="_blank">/online-booking/{{tenant.reference}}</a></h3>
+      <h3>Your online booking link: <a href="{{'/online-booking/' + tenant.reference}}" target="_blank">https://app.redkokia.com/online-booking/{{tenant.reference}}</a></h3>
 
       <form (ngSubmit)="saveTenant()" #tenantForm="ngForm">
         <div class="row">
@@ -68,7 +68,7 @@
       </form>
       <div class="row">
         <div class="col-sm-12">
-          <button mat-button (click)="saveTenant()" class="btn btn-success">Save</button>
+          <button mat-button (click)="saveTenant()" mat-raised-button color="primary">Save Spa Settings</button>
         </div>
       </div>
     </div>
