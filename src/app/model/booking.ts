@@ -1,5 +1,6 @@
 import {Client} from "./client";
 import {Treatment} from "./treatment";
+import {Employee} from "./employee";
 
 export class Booking{
   id: number
@@ -10,6 +11,7 @@ export class Booking{
   client: Client
   treatments: Treatment[]
   clientNotes: string
+  employee!: Employee
 
 
   constructor(

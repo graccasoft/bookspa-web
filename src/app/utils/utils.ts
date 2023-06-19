@@ -34,4 +34,9 @@ export class Utils {
     if( minutes == 0) return `${hours} hr`
     return `${hours} hr, ${minutes} mins`
   }
+
+  static apiBaseUrl(): string{
+    //return 'http://24.199.102.69:8080'
+    return ''
+  }
 }

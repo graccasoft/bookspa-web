@@ -18,12 +18,12 @@ import {TenantSettingsComponent} from "./pages/tenant-settings/tenant-settings.c
 
 const routes: Routes = [
   //tenant
-  {path:'reserve', component:ReserveComponent, title:'BlackKokia - Quick Reservation', canActivate: [AuthGuard]},
-  {path:'reservations', component:ReservationsComponent, title:'BlackKokia - Reservations', canActivate: [AuthGuard]},
-  {path:'treatments', component:TreatmentsComponent, title:'BlackKokia - Treatments', canActivate: [AuthGuard]},
-  {path:'customers', component:CustomersComponent, title:'BlackKokia - Customers', canActivate: [AuthGuard]},
-  {path:'employees', component:EmployeesComponent, title:'BlackKokia - Employees', canActivate: [AuthGuard]},
-  {path:'settings', component:TenantSettingsComponent, title:'BlackKokia - Spa Settings', canActivate: [AuthGuard]},
+  {path:'reserve', component:ReserveComponent, title:'RedKokia - Quick Reservation', canActivate: [AuthGuard]},
+  {path:'reservations', component:ReservationsComponent, title:'RedKokia - Reservations', canActivate: [AuthGuard]},
+  {path:'treatments', component:TreatmentsComponent, title:'RedKokia - Treatments', canActivate: [AuthGuard]},
+  {path:'customers', component:CustomersComponent, title:'RedKokia - Customers', canActivate: [AuthGuard]},
+  {path:'employees', component:EmployeesComponent, title:'RedKokia - Employees', canActivate: [AuthGuard]},
+  {path:'settings', component:TenantSettingsComponent, title:'RedKokia - Spa Settings', canActivate: [AuthGuard]},
 
   //super admin
   {path:'tenants', component:TenantsComponent, title:'BlackKokia - Tenants', canActivate: [SuperAuthGuard]},

@@ -7,13 +7,14 @@ import {Utils} from "../utils/utils";
 import {Treatment} from "../model/treatment";
 import {CategorisedTreatments} from "../model/categorised-treatments";
 import {Tenant} from "../model/tenant";
+import {Employee} from "../model/employee";
 
 @Injectable({
   providedIn: 'root'
 })
 export class BookingService {
-  private apiUrl = '/api/bookings'
-  private onlineBookingApiUrl = '/api/online-booking'
+  private apiUrl = Utils.apiBaseUrl() + '/api/bookings'
+  private onlineBookingApiUrl = Utils.apiBaseUrl() + '/api/online-booking'
   constructor(private http: HttpClient) { }
 
   save(booking: Booking): Observable<Booking> {
@@ -33,9 +34,9 @@ export class BookingService {
   bookOnline(booking: Booking): Observable<Booking> {
     return this.http.post<Booking>(`${this.onlineBookingApiUrl}`, booking);
   }
-  getFreeTimeSlots(tenantId:number, date:Date, duration:number): Observable<TimeSlot[]>{
+  getFreeTimeSlots(tenantId:number, employeeId:number, date:Date, duration:number): Observable<TimeSlot[]>{
     const urlDate = Utils.dateToUrlFormat(date)
-    return this.http.get<TimeSlot[]>(`${this.onlineBookingApiUrl}/available-slots?tenantId=${tenantId}&date=${urlDate}&duration=${duration}`);
+    return this.http.get<TimeSlot[]>(`${this.onlineBookingApiUrl}/available-slots?tenantId=${tenantId}&employeeId=${employeeId}&date=${urlDate}&duration=${duration}`);
   }
   getTreatments(tenantId: number): Observable<Treatment[]> {
     return this.http.get<Treatment[]>(`${this.onlineBookingApiUrl}/treatments?tenantId=${tenantId}`);
@@ -47,5 +48,10 @@ export class BookingService {
 
   getTenant(reference: string): Observable<Tenant> {
     return this.http.get<Tenant>(`${this.onlineBookingApiUrl}/tenants?reference=${reference}`);
+  }
+
+  //todo: remove phone numbers and show first and last name alone
+  getEmployees(tenantId: number): Observable<Employee[]> {
+    return this.http.get<Employee[]>(`${this.onlineBookingApiUrl}/employees?tenantId=${tenantId}`);
   }
 }

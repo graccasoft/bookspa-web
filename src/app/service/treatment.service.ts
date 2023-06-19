@@ -2,12 +2,13 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Treatment} from "../model/treatment";
 import {catchError, Observable} from "rxjs";
+import {Utils} from "../utils/utils";
 
 @Injectable({
   providedIn: 'root'
 })
 export class TreatmentService {
-  private apiUrl = '/api/treatments'
+  private apiUrl = Utils.apiBaseUrl() + '/api/treatments'
   constructor(private http: HttpClient) { }
 
   //get treatments

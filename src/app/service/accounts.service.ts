@@ -3,6 +3,7 @@ import {User} from "../model/user";
 import {BehaviorSubject, map, Observable} from "rxjs";
 import {Router} from "@angular/router";
 import {HttpClient} from "@angular/common/http";
+import {Utils} from "../utils/utils";
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +11,7 @@ import {HttpClient} from "@angular/common/http";
 export class AccountsService {
   private userSubject: BehaviorSubject<User | null>;
   public user: Observable<User | null>;
+  private accountsUrl = Utils.apiBaseUrl() + '/api/token'
   constructor(
     private router: Router,
     private http: HttpClient
@@ -25,7 +27,7 @@ export class AccountsService {
   login(username: string, password: string) {
     const base64Encoded = btoa(`${username}:${password}`)
     const authHeaders = {'Authorization':`Basic ${base64Encoded}`}
-    return this.http.post<User>(`api/token`, {}, {'headers':authHeaders})
+    return this.http.post<User>(`${this.accountsUrl}`, {}, {'headers':authHeaders})
       .pipe(map((user:User) => {
         // store user details and jwt token in local storage to keep user logged in between page refreshes
         localStorage.setItem('user', JSON.stringify(user));

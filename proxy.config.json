@@ -1,0 +1,11 @@
+{
+  "/api": {
+    "target": "http://24.199.102.69:8080",
+    "secure": false,
+    "changeOrigin": true,
+    "_pathRewrite": {
+      "^/api": ""
+    },
+    "logLevel": "debug"
+  }
+}

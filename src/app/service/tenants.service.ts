@@ -14,7 +14,7 @@ import {ApiResponse} from "../model/api-response";
   providedIn: 'root'
 })
 export class TenantsService {
-  private apiUrl = '/api/tenants'
+  private apiUrl = Utils.apiBaseUrl() + '/api/tenants'
   constructor(private http: HttpClient) { }
 
   save(tenant: Tenant): Observable<Tenant> {

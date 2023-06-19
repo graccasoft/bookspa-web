@@ -10,6 +10,7 @@ import {Utils} from "../../utils/utils";
 import {FormBuilder, Validators} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
 import { CategorisedTreatments } from 'src/app/model/categorised-treatments';
+import {Employee} from "../../model/employee";
 
 @Component({
   selector: 'app-reserve-public',
@@ -26,12 +27,12 @@ export class ReservePublicComponent {
   tomorrow = new Date()
   availableTimeSlots: String[] = []
   selectedTimeSlot! : String
+  employees: Employee[] = []
   displayDate = new Date()
-
-  tawkScriptElement: HTMLScriptElement;
 
   firstFormGroup = this._formBuilder.group({
     treatmentCtrl: ['', Validators.required],
+    therapistCtrl: ['', Validators.required],
   });
   secondFormGroup = this._formBuilder.group({
     timeSlotCtrl: ['', Validators.required],
@@ -51,22 +52,17 @@ export class ReservePublicComponent {
     private _router: Router,
     private activatedRoute: ActivatedRoute,
   ) {
-    this.tawkScriptElement = document.createElement("script");
-    this.tawkScriptElement.src = "https://embed.tawk.to/6480447194cf5d49dc5c47d6/1h2agmong";
-    this.tawkScriptElement.crossOrigin = "*"
-    this.tawkScriptElement.async = true
-    this.tawkScriptElement.charset = "UTF-8"
-    document.body.appendChild(this.tawkScriptElement);
+
   }
 
   ngOnInit(){
 
     this.activatedRoute.params.subscribe(s => {
-      console.log(s["reference"])
       this.bookingService.getTenant(s["reference"]).subscribe(
         tenant=>{
           this.tenant = tenant
           this.fetchTreatments()
+          this.fetchEmployees()
         }
       )
     });
@@ -79,6 +75,9 @@ export class ReservePublicComponent {
   calculateTotalAmount():number{
     return this.bookingTreatments.reduce((previousValue, currentValue)=> {return previousValue + currentValue.price}, 0)
   }
+  fetchEmployees(){
+    this.bookingService.getEmployees(this.tenant.id).subscribe( employees => this.employees = employees )
+  }
   fetchTreatments(){
     this.bookingService.getCategorisedTreatments(this.tenant.id)
       .subscribe(treatments => this.treatmentCategories = treatments)
@@ -90,7 +89,7 @@ export class ReservePublicComponent {
     { return previousValue + currentValue.minimumDuration }, 0)
 
 
-    this.bookingService.getFreeTimeSlots(this.tenant.id, date, this.booking.duration)
+    this.bookingService.getFreeTimeSlots(this.tenant.id, this.booking.employee.id, date, this.booking.duration)
       .subscribe(timeSlots=>{
         this.availableTimeSlots = []
         timeSlots.map((timeSlot)=>{
