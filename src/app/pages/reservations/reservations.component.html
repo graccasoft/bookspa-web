@@ -6,6 +6,7 @@
         <th>Date</th>
         <th>Time</th>
         <th>Treatment</th>
+        <th>Therapist</th>
         <th>Customer</th>
         <th>Status</th>
         <th class="text-right">Actions</th>
@@ -19,6 +20,9 @@
           <p *ngFor="let treatment of booking.treatments">{{treatment.name}}</p>
         </td>
         <td>
+          <span *ngIf="booking.employee">{{booking.employee.firstName + ' ' + booking.employee.surname}}</span>
+        </td>
+        <td>
           {{booking.client.firstName + ' ' + booking.client.surname}}<br>
           {{ booking.client.phoneNumber }}
         </td>
@@ -27,7 +31,7 @@
           <button mat-button [matMenuTriggerFor]="menu" mat-raised-button color="primary">Actions</button>
           <mat-menu #menu="matMenu">
             <button mat-menu-item (click)="cancelBooking(booking.id)" >Cancel</button>
-            <button mat-menu-item>Check-In</button>
+            <button mat-menu-item (click)="updatePayment(booking.id)" >Payment</button>
           </mat-menu>
         </td>
       </tr>

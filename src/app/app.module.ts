@@ -19,7 +19,7 @@ import {MatChipsModule} from "@angular/material/chips";
 import {MatInputModule} from "@angular/material/input";
 import {MatSelectModule} from "@angular/material/select";
 import {MatButtonModule} from "@angular/material/button";
-import { ReservationsComponent } from './pages/reservations/reservations.component';
+import { ReservationsComponent,ReservationPaymentFormDialog } from './pages/reservations/reservations.component';
 import {MatMenuModule} from "@angular/material/menu";
 import { TreatmentsComponent } from './pages/treatments/treatments.component';
 import { TreatmentsFormDialog } from "./pages/treatments/treatments.component";
@@ -44,12 +44,15 @@ import { UsersComponent } from './pages/admin/users/users.component';
 import {UsersFormDialog} from "./pages/admin/users/users.component";
 import { AdminLayoutComponent } from './pages/admin/admin-layout/admin-layout.component';
 import { TenantSettingsComponent } from './pages/tenant-settings/tenant-settings.component';
+import { BookingDetailsComponent } from './pages/booking-details/booking-details.component';
+
 @NgModule({
   declarations: [
     AppComponent,
     LayoutComponent,
     ReserveComponent,
     ReservationsComponent,
+    ReservationPaymentFormDialog,
     TreatmentsComponent,
     TreatmentsFormDialog,
     CustomersComponent,
@@ -65,7 +68,8 @@ import { TenantSettingsComponent } from './pages/tenant-settings/tenant-settings
     UsersComponent,
     UsersFormDialog,
     AdminLayoutComponent,
-    TenantSettingsComponent
+    TenantSettingsComponent,
+    BookingDetailsComponent
   ],
   imports: [
     BrowserModule,

@@ -8,6 +8,7 @@ import {Treatment} from "../model/treatment";
 import {CategorisedTreatments} from "../model/categorised-treatments";
 import {Tenant} from "../model/tenant";
 import {Employee} from "../model/employee";
+import { ApiResponse } from '../model/api-response';
 
 @Injectable({
   providedIn: 'root'
@@ -27,6 +28,9 @@ export class BookingService {
 
   cancelBooking(bookingId: number): Observable<any>{
     return this.http.delete(`${this.apiUrl}/${bookingId}`)
+  }
+  savePayment(booking: Booking): Observable<ApiResponse>{
+    return this.http.patch<ApiResponse> (`${this.apiUrl}`, booking)
   }
 
   /* public online booking */
@@ -48,6 +52,12 @@ export class BookingService {
 
   getTenant(reference: string): Observable<Tenant> {
     return this.http.get<Tenant>(`${this.onlineBookingApiUrl}/tenants?reference=${reference}`);
+  }
+  cancelMyBooking(reference: string): Observable<any>{
+    return this.http.delete(`${this.onlineBookingApiUrl}/bookings/${reference}`)
+  }
+  getMyBooking(reference: string): Observable<Booking>{
+    return this.http.get<Booking>(`${this.onlineBookingApiUrl}/bookings/${reference}`)
   }
 
   //todo: remove phone numbers and show first and last name alone

@@ -15,6 +15,7 @@ import {TenantsComponent} from "./pages/admin/tenants/tenants.component";
 import {SuperAuthGuard} from "./helpers/super-auth.guard";
 import {UsersComponent} from "./pages/admin/users/users.component";
 import {TenantSettingsComponent} from "./pages/tenant-settings/tenant-settings.component";
+import { BookingDetailsComponent } from './pages/booking-details/booking-details.component';
 
 const routes: Routes = [
   //tenant
@@ -32,6 +33,7 @@ const routes: Routes = [
   //public
   {path:'online-booking/:reference', component:ReservePublicComponent, title:'Online Booking - RedKokia'},
   {path:'booking-success', component:ReservePublicConfirmationComponent, title:'Online Booking - RedKokia'},
+  {path:'booking/:reference', component:BookingDetailsComponent, title:'My Booking - RedKokia'},
   {path:'login', component:LoginComponent, title:'Client Login - RedKokia'},
   {path:'**', component:LoginComponent, title:'Client Login - RedKokia'},
 ];

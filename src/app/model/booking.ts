@@ -12,6 +12,8 @@ export class Booking{
   treatments: Treatment[]
   clientNotes: string
   employee!: Employee
+  paymentMethod!: string
+  reference!:string
 
 
   constructor(

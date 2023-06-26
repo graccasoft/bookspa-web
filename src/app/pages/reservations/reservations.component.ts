@@ -1,12 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import {Booking} from "../../model/booking";
 import {BookingService} from "../../service/booking.service";
 import {Tenant} from "../../model/tenant";
-import { MatDialog } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {ConfirmDialogComponent} from "../../confirm-dialog/confirm-dialog.component";
 import {AccountsService} from "../../service/accounts.service";
 import {User} from "../../model/user";
+import { Utils } from 'src/app/utils/utils';
 
 @Component({
   selector: 'app-reservations',
@@ -16,6 +17,7 @@ import {User} from "../../model/user";
 export class ReservationsComponent {
 
   tenant! : Tenant | undefined
+  booking!: Booking
   bookings: Booking[] = []
 
   constructor(
@@ -58,7 +60,49 @@ export class ReservationsComponent {
           this._snackBar.open("Booking has been cancelled", "Ok")
       }
     })
+  }
 
+  updatePayment(id:number){
+    this.selectBooking(id)
+    this.openDialog()
+  }
 
+  selectBooking (id:number){
+    this.booking = this.bookings.filter(t=>  t.id === id)[0]
+  }
+  openDialog() {
+    const dialogRef = this.dialog.open(ReservationPaymentFormDialog,{width:"50%",data:{booking: this.booking}});
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.fetchBookings()
+    });
+  }
+}
+
+@Component({
+  selector: 'reservation-payment-form-dialog',
+  templateUrl: 'reservation-payment-form-dialog.html',
+})
+export class ReservationPaymentFormDialog {
+
+  protected readonly Utils = Utils;
+  booking!: Booking
+  constructor(
+    @Inject(MAT_DIALOG_DATA) data: { booking: Booking },
+    private bookingService: BookingService,
+    private _snackBar: MatSnackBar,
+    private dialogRef: MatDialogRef<ReservationPaymentFormDialog>,) {
+    this.booking = data.booking
+  }
+
+  calculateTotalAmount():number{
+    return this.booking.treatments.reduce((previousValue, currentValue)=> {return previousValue + currentValue.price}, 0)
+  }
+
+  savePayment() {
+    this.bookingService.savePayment( this.booking ).subscribe((booking)=>{
+      this._snackBar.open("Treatment has been saved", "Ok")
+      this.dialogRef.close();
+    })
   }
 }
