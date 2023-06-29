@@ -45,6 +45,7 @@ import {UsersFormDialog} from "./pages/admin/users/users.component";
 import { AdminLayoutComponent } from './pages/admin/admin-layout/admin-layout.component';
 import { TenantSettingsComponent } from './pages/tenant-settings/tenant-settings.component';
 import { BookingDetailsComponent } from './pages/booking-details/booking-details.component';
+import { ReportComponent } from './pages/report/report.component';
 
 @NgModule({
   declarations: [
@@ -69,7 +70,8 @@ import { BookingDetailsComponent } from './pages/booking-details/booking-details
     UsersFormDialog,
     AdminLayoutComponent,
     TenantSettingsComponent,
-    BookingDetailsComponent
+    BookingDetailsComponent,
+    ReportComponent
   ],
   imports: [
     BrowserModule,

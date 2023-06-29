@@ -9,6 +9,7 @@ import {CategorisedTreatments} from "../model/categorised-treatments";
 import {Tenant} from "../model/tenant";
 import {Employee} from "../model/employee";
 import { ApiResponse } from '../model/api-response';
+import { BookingReport } from '../model/booking-report';
 
 @Injectable({
   providedIn: 'root'
@@ -31,6 +32,9 @@ export class BookingService {
   }
   savePayment(booking: Booking): Observable<ApiResponse>{
     return this.http.patch<ApiResponse> (`${this.apiUrl}`, booking)
+  }
+  getTenantBookingReport(tenantId: number, startDate: String, endDate: String): Observable<BookingReport[]>{
+    return this.http.get<BookingReport[]>(`${this.apiUrl}/report?tenantId=${tenantId}&startDate=${startDate}&endDate=${endDate}`)
   }
 
   /* public online booking */

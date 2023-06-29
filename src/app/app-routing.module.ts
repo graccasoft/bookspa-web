@@ -16,6 +16,7 @@ import {SuperAuthGuard} from "./helpers/super-auth.guard";
 import {UsersComponent} from "./pages/admin/users/users.component";
 import {TenantSettingsComponent} from "./pages/tenant-settings/tenant-settings.component";
 import { BookingDetailsComponent } from './pages/booking-details/booking-details.component';
+import { ReportComponent } from './pages/report/report.component';
 
 const routes: Routes = [
   //tenant
@@ -25,6 +26,7 @@ const routes: Routes = [
   {path:'customers', component:CustomersComponent, title:'RedKokia - Customers', canActivate: [AuthGuard]},
   {path:'employees', component:EmployeesComponent, title:'RedKokia - Employees', canActivate: [AuthGuard]},
   {path:'settings', component:TenantSettingsComponent, title:'RedKokia - Spa Settings', canActivate: [AuthGuard]},
+  {path:'report', component:ReportComponent, title:'RedKokia - Report', canActivate: [AuthGuard]},
 
   //super admin
   {path:'tenants', component:TenantsComponent, title:'BlackKokia - Tenants', canActivate: [SuperAuthGuard]},

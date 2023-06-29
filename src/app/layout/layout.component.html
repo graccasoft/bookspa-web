@@ -42,6 +42,12 @@
           Customers
         </a>
       </li>
+      <li>
+        <a [routerLink]="['/report']" class="nav-link text-white" [ngClass]="{'active': activeMenu === 'report'}">
+          <mat-icon class="me-2">receipt_long</mat-icon>
+          Report
+        </a>
+      </li>
     </ul>
     <hr>
   </div>
