@@ -35,8 +35,9 @@ export class Utils {
     return `${hours} hr, ${minutes} mins`
   }
 
+  //ffs
   static apiBaseUrl(): string{
-    //return 'http://24.199.102.69:8080'
-    return ''
+    return 'https://app-backend.redkokia.com'
+    //return ''
   }
 }
