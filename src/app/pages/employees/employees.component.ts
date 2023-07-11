@@ -21,7 +21,9 @@ export class EmployeesComponent {
   constructor(
     public dialog: MatDialog,
     private treatmentService: EmployeesService,
-    private accountsService: AccountsService
+    private accountsService: AccountsService,
+    private employeesService: EmployeesService,
+    private _snackBar: MatSnackBar
   ) {}
 
   ngOnInit(){
@@ -41,7 +43,14 @@ export class EmployeesComponent {
     this.employee = this.employees.filter(t=>  t.id === id)[0]
   }
 
-  toggleAvailability(id:number){}
+  toggleAvailability(id:number){
+    this.selectEmployee(id)
+    this.employee.isAvailable = !this.employee.isAvailable
+    this.employeesService.toggleAvailability( this.employee ).subscribe(()=>{
+      this._snackBar.open("Employee has been updated", "Ok")
+      this.fetchEmployees()
+    })
+  }
   newEmployee(){
     this.employee = new Employee(0,'','','',false, <Tenant>this.tenant)
     this.openDialog()

@@ -17,6 +17,7 @@ export class BookingDetailsComponent {
 
   booking!: Booking
   bookingCancelled = false
+  isLoading = false
 
   constructor(
     private bookingService: BookingService,
@@ -48,6 +49,7 @@ export class BookingDetailsComponent {
 
     dialog.afterClosed().subscribe((confirmed: boolean) => {
       if (confirmed) {
+        this.isLoading =true
         this.bookingService.cancelMyBooking (this.booking.reference)
           .subscribe(resp => this.bookingCancelled = true)
 

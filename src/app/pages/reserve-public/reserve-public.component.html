@@ -30,7 +30,7 @@
                       <input (keyup)="searchTreatmentsKeyup($event)" name="treatmentFilter" class="form-control" placeholder="Search for treatment">
                       <mat-optgroup  *ngFor="let category of filteredCategories"  [label]="category.category.name">
                         <mat-option *ngFor="let treatment of category.treatments" [value]="treatment">
-                          {{treatment.name}}
+                          {{treatment.name}} <span class="text-success" *ngIf="treatment.isPromotion"> (Promotion)</span>
                         </mat-option>
                       </mat-optgroup>
 
@@ -197,7 +197,12 @@
 
             <div class="text-end">
               <button class="btn btn-primary border me-4" mat-button matStepperPrevious>Back</button>
-              <button (click)="saveBooking()" class="btn btn-primary border" mat-button>Confirm Booking</button>
+              <button *ngIf="!isLoading" (click)="saveBooking()" class="btn btn-primary border" mat-button>Confirm Booking</button>
+              
+              <button *ngIf="isLoading" class="btn btn-primary border" type="button" disabled>
+                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                Placing booking...
+              </button>
             </div>
           </mat-step>
         </mat-stepper>

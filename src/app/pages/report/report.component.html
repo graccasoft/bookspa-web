@@ -1,4 +1,4 @@
-<app-layout [activeMenu]="'reservations'">
+<app-layout [activeMenu]="'report'">
 
     <div class="row">
         <div class="col-md-12">
@@ -11,7 +11,7 @@
             <button class="btn btn-sm me-2" [ngClass]="{'btn-primary': currentPeriod === 'MONTHLY','btn-secondary': currentPeriod !== 'MONTHLY'}"
                 (click)="setCurrentPeriod('MONTHLY')">Monthly</button>
 
-            <button class="btn btn-primary float-end  btn-sm">Export</button>
+            <button class="btn btn-primary float-end  btn-sm" (click)="downloadFile()">Export</button>
         </div>
     </div>
     <div class="row mt-2">

@@ -5,6 +5,7 @@ import { Tenant } from 'src/app/model/tenant';
 import { User } from 'src/app/model/user';
 import { AccountsService } from 'src/app/service/accounts.service';
 import { BookingService } from 'src/app/service/booking.service';
+import { DownloadFileService } from 'src/app/service/download-file.service';
 
 @Component({
   selector: 'app-report',
@@ -16,11 +17,15 @@ export class ReportComponent {
   currentPeriod = "DAILY"
   startDate!: Date
   endDate!: Date
-  tenant! : Tenant | undefined
+  tenant!: Tenant | undefined
 
-  constructor(private bookingService: BookingService, private accountsService: AccountsService) { }
+  constructor(
+    private bookingService: BookingService,
+    private accountsService: AccountsService,
+    private downloadService: DownloadFileService
+  ) { }
 
-  ngOnInit(){
+  ngOnInit() {
     const user = this.accountsService.userValue as User
     if (user) {
       this.tenant = user.tenant
@@ -46,12 +51,28 @@ export class ReportComponent {
     this.loadReport()
   }
 
-  loadReport(){
+  loadReport() {
     const startDate = moment(this.startDate).format()
     const endDate = moment(this.endDate).add(1, 'days').format()
 
     // @ts-ignore
     this.bookingService.getTenantBookingReport(this.tenant.id, startDate, endDate)
       .subscribe(bookings => this.bookings = bookings)
+  }
+
+  downloadFile() {
+    const startDate = moment(this.startDate).format()
+    const endDate = moment(this.endDate).add(1, 'days').format()
+    const downloadUrl = `${this.bookingService.apiUrl}/report-csv?tenantId=${this.tenant?.id}&startDate=${startDate}&endDate=${endDate}`
+    this.downloadService
+      .download(downloadUrl)
+      .subscribe(blob => {
+        const a = document.createElement('a')
+        const objectUrl = URL.createObjectURL(blob)
+        a.href = objectUrl
+        a.download = 'bookings.csv';
+        a.click();
+        URL.revokeObjectURL(objectUrl);
+      })
   }
 }

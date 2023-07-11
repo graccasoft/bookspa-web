@@ -30,6 +30,7 @@ export class ReservePublicComponent {
   selectedTimeSlot! : String
   employees: Employee[] = []
   displayDate = new Date()
+  isLoading = false
 
   firstFormGroup = this._formBuilder.group({
     treatmentCtrl: ['', Validators.required],
@@ -117,11 +118,13 @@ export class ReservePublicComponent {
   }
 
   saveBooking(){
+    this.isLoading = true
     this.booking.treatments = this.bookingTreatments
     this.bookingService.bookOnline(this.booking)
       .subscribe(booking=>{
         this._snackBar.open("Booking successfully submitted", "Ok")
         this._router.navigate(['booking-success'])
+        this.isLoading = false
       })
   }
 

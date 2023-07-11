@@ -1,106 +1,111 @@
 <div class="container py-3">
-    <header>
-      <div class="d-flex flex-column flex-md-row align-items-center pb-3 mb-4 border-bottom">
-        <a href="/" class="d-flex align-items-center link-body-emphasis text-decoration-none">
-          <img src="assets/red-kokia-logo.svg" width="100px">
-        </a>
-  
-        <nav class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
-        </nav>
-      </div>
-  
-      <div class="pricing-header p-3 pb-md-4 mx-auto">
-        <h1 class="display-4 fw-normal text-body-emphasis">Manage Your Booking</h1>
-      </div>
-    </header>
-  
-    <div *ngIf="!bookingCancelled" >
-      <div class="p-5 text-center bg-body-tertiary">
-        <div class="container" *ngIf="booking">
-          <h1 class="text-body-emphasis">Booking Details</h1>
-          
-          <div class="text-start mb-4 mt-4">
-            <div class="row border-bottom bg-light mb-2">
-              <div class="col-md-6 col-sm-12">
-                <h5 class="mb-1">Treatments</h5>
-                <div *ngFor="let treatment of booking.treatments" class="mb-1">
-                  <strong>{{treatment.name}}</strong>
-                  ( {{ Utils.formatDuration(treatment.minimumDuration)}} )
-                  <span class="float-end">{{ treatment.price | currency:'ZAR' }}</span>
-                </div>
-                <div>
-                  <strong>Total</strong>
-                  <span class="float-end">{{calculateTotalAmount() | currency:'ZAR'}}</span>
-                </div>
-              </div>
-              <div class="col-md-6 col-sm-12">
-                <h5 class="mb-1">Date and time</h5>
-                <strong>{{booking.bookingDate | date:'EEEE d MMMM y HH:mm'}}</strong>
-              </div>
-            </div>
-            <div class="row border-bottom">
-              <div class="col-md-6 col-sm-12">
-                <h5 class="mb-1">Customer Name</h5>
-                <strong>{{booking.client.firstName}} {{booking.client.surname}}</strong>
-              </div>
-              <div class="col-md-6 col-sm-12">
-                <h5 class="mb-1">Customer Email</h5>
-                <strong>{{booking.client.email}}</strong>
-              </div>
-            </div>
-            <div class="row border-bottom bg-light pt-2 mb-2">
-              <div class="col-md-6 col-sm-12">
-                <h5 class="mb-1">Phone Number</h5>
-                <strong>{{booking.client.phoneNumber}}</strong>
-              </div>
-              <div class="col-md-6 col-sm-12">
-                <h5 class="mb-1">Address</h5>
-                <strong>{{booking.client.address}}</strong>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-12">
-                <h5 class="mb-1">Customer Request</h5>
-                <strong>{{booking.clientNotes}}</strong>
-              </div>
-            </div>
-        
-          </div>
+  <header>
+    <div class="d-flex flex-column flex-md-row align-items-center pb-3 mb-4 border-bottom">
+      <a href="/" class="d-flex align-items-center link-body-emphasis text-decoration-none">
+        <img src="assets/red-kokia-logo.svg" width="100px">
+      </a>
 
-
-          <button mat-button mat-raised-button color="warn" (click)="cancelBooking()" >Cancel Your Booking</button>
-
-        </div>
-      </div>
+      <nav class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
+      </nav>
     </div>
 
-    <div class="my-5" *ngIf="bookingCancelled">
-        <div class="p-5 text-center bg-body-tertiary">
-          <div class="container py-5">
-            <h1 class="text-body-emphasis">Booking Cancelled</h1>
-            <p class="col-lg-8 mx-auto lead">
-              Your booking was successfully cancelled.<br>
-              An email with more details has been sent to the email address you provided
-            </p>
+    <div class="pricing-header p-3 pb-md-4 mx-auto">
+      <h1 class="display-4 fw-normal text-body-emphasis">Manage Your Booking</h1>
+    </div>
+  </header>
+
+  <div *ngIf="!bookingCancelled">
+    <div class="p-5 text-center bg-body-tertiary">
+      <div class="container" *ngIf="booking">
+        <h1 class="text-body-emphasis">Booking Details</h1>
+
+        <div class="text-start mb-4 mt-4">
+          <div class="row border-bottom bg-light mb-2">
+            <div class="col-md-6 col-sm-12">
+              <h5 class="mb-1">Treatments</h5>
+              <div *ngFor="let treatment of booking.treatments" class="mb-1">
+                <strong>{{treatment.name}}</strong>
+                ( {{ Utils.formatDuration(treatment.minimumDuration)}} )
+                <span class="float-end">{{ treatment.price | currency:'ZAR' }}</span>
+              </div>
+              <div>
+                <strong>Total</strong>
+                <span class="float-end">{{calculateTotalAmount() | currency:'ZAR'}}</span>
+              </div>
+            </div>
+            <div class="col-md-6 col-sm-12">
+              <h5 class="mb-1">Date and time</h5>
+              <strong>{{booking.bookingDate | date:'EEEE d MMMM y HH:mm'}}</strong>
+            </div>
           </div>
+          <div class="row border-bottom">
+            <div class="col-md-6 col-sm-12">
+              <h5 class="mb-1">Customer Name</h5>
+              <strong>{{booking.client.firstName}} {{booking.client.surname}}</strong>
+            </div>
+            <div class="col-md-6 col-sm-12">
+              <h5 class="mb-1">Customer Email</h5>
+              <strong>{{booking.client.email}}</strong>
+            </div>
+          </div>
+          <div class="row border-bottom bg-light pt-2 mb-2">
+            <div class="col-md-6 col-sm-12">
+              <h5 class="mb-1">Phone Number</h5>
+              <strong>{{booking.client.phoneNumber}}</strong>
+            </div>
+            <div class="col-md-6 col-sm-12">
+              <h5 class="mb-1">Address</h5>
+              <strong>{{booking.client.address}}</strong>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <h5 class="mb-1">Customer Request</h5>
+              <strong>{{booking.clientNotes}}</strong>
+            </div>
+          </div>
+
         </div>
+
+
+        <button *ngIf="!isLoading" mat-button mat-raised-button color="warn" (click)="cancelBooking()">Cancel Your
+          Booking</button>
+
+        <button *ngIf="isLoading" class="btn btn-danger border" type="button" disabled>
+          <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+          Cancelling booking...
+        </button>
+
       </div>
-  
-    <footer class="pt-4 my-md-5 pt-md-5 border-top">
-      <div class="row">
-  
-        <div class="col-6 col-md">
-          <a class="d-flex align-items-center link-body-emphasis text-decoration-none" href="https://redkokia.com">
-            <img src="assets/red-kokia-logo.svg" width="100px">
-          </a>
-          <h5>Powered by RedKokia</h5>
-  
-        </div>
-        <div class="col-6 col-md">
-  
-        </div>
-  
-      </div>
-    </footer>
+    </div>
   </div>
-  
+
+  <div class="my-5" *ngIf="bookingCancelled">
+    <div class="p-5 text-center bg-body-tertiary">
+      <div class="container py-5">
+        <h1 class="text-body-emphasis">Booking Cancelled</h1>
+        <p class="col-lg-8 mx-auto lead">
+          Your booking was successfully cancelled.<br>
+          An email with more details has been sent to the email address you provided
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <footer class="pt-4 my-md-5 pt-md-5 border-top">
+    <div class="row">
+
+      <div class="col-6 col-md">
+        <a class="d-flex align-items-center link-body-emphasis text-decoration-none" href="https://redkokia.com">
+          <img src="assets/red-kokia-logo.svg" width="100px">
+        </a>
+        <h5>Powered by RedKokia</h5>
+
+      </div>
+      <div class="col-6 col-md">
+
+      </div>
+
+    </div>
+  </footer>
+</div>

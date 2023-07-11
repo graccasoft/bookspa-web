@@ -15,7 +15,7 @@ import { BookingReport } from '../model/booking-report';
   providedIn: 'root'
 })
 export class BookingService {
-  private apiUrl = Utils.apiBaseUrl() + '/api/bookings'
+  public apiUrl = Utils.apiBaseUrl() + '/api/bookings'
   private onlineBookingApiUrl = Utils.apiBaseUrl() + '/api/online-booking'
   constructor(private http: HttpClient) { }
 

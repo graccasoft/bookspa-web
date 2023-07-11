@@ -26,7 +26,10 @@
           {{booking.client.firstName + ' ' + booking.client.surname}}<br>
           {{ booking.client.phoneNumber }}
         </td>
-        <td>{{ booking.status }}</td>
+        <td>
+          {{ booking.status }}<br>
+          {{ booking.paymentMethod }}
+        </td>
         <td class="text-right">
           <button mat-button [matMenuTriggerFor]="menu" mat-raised-button color="primary">Actions</button>
           <mat-menu #menu="matMenu">

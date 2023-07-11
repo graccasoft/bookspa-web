@@ -23,14 +23,15 @@ const routes: Routes = [
   {path:'reserve', component:ReserveComponent, title:'RedKokia - Quick Reservation', canActivate: [AuthGuard]},
   {path:'reservations', component:ReservationsComponent, title:'RedKokia - Reservations', canActivate: [AuthGuard]},
   {path:'treatments', component:TreatmentsComponent, title:'RedKokia - Treatments', canActivate: [AuthGuard]},
+  {path:'treatments/:isPromotion', component:TreatmentsComponent, title:'RedKokia - Treatments', canActivate: [AuthGuard]},
   {path:'customers', component:CustomersComponent, title:'RedKokia - Customers', canActivate: [AuthGuard]},
   {path:'employees', component:EmployeesComponent, title:'RedKokia - Employees', canActivate: [AuthGuard]},
   {path:'settings', component:TenantSettingsComponent, title:'RedKokia - Spa Settings', canActivate: [AuthGuard]},
   {path:'report', component:ReportComponent, title:'RedKokia - Report', canActivate: [AuthGuard]},
 
   //super admin
-  {path:'tenants', component:TenantsComponent, title:'BlackKokia - Tenants', canActivate: [SuperAuthGuard]},
-  {path:'users/:tenantId', component:UsersComponent, title:'BlackKokia - Tenant Users', canActivate: [SuperAuthGuard]},
+  {path:'tenants', component:TenantsComponent, title:'RedKokia - Tenants', canActivate: [SuperAuthGuard]},
+  {path:'users/:tenantId', component:UsersComponent, title:'RedKokia - Tenant Users', canActivate: [SuperAuthGuard]},
 
   //public
   {path:'online-booking/:reference', component:ReservePublicComponent, title:'Online Booking - RedKokia'},

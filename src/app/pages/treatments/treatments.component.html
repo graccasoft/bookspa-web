@@ -1,7 +1,7 @@
-<app-layout [activeMenu]="'treatments'" >
+<app-layout [activeMenu]=" isPromotions ? 'promotions' : 'treatments'" >
 
   <button mat-raised-button color="primary" (click)="newTreatment()" class="mb-4" >
-    Add Treatment
+    Add {{isPromotions ? 'Promotion' : 'Treatment'}}
   </button>
   <table class="table table-striped table-bordered">
     <thead>
@@ -27,7 +27,7 @@
         <button mat-button [matMenuTriggerFor]="menu" mat-raised-button color="primary">Actions</button>
         <mat-menu #menu="matMenu">
           <button mat-menu-item data-bs-toggle="modal" data-bs-target="#treatment-form" (click)="editTreatment(treatment.id)">Edit</button>
-          <button mat-menu-item>Delete</button>
+          <button mat-menu-item  (click)="deleteTreatment(treatment.id)">Delete</button>
         </mat-menu>
       </td>
     </tr>

@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
-import {MatDialog} from "@angular/material/dialog";
+import { Component, Inject } from '@angular/core';
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {ClientsService} from "../../service/clients.service";
 import {AccountsService} from "../../service/accounts.service";
 import {Tenant} from "../../model/tenant";
 import {Client} from "../../model/client";
 import {User} from "../../model/user";
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-customers',
@@ -35,10 +36,10 @@ export class CustomersComponent {
       .subscribe(clients => this.clients = clients)
   }
   openDialog() {
-    const dialogRef = this.dialog.open(CustomersFormDialog,{width:"50%"});
+    const dialogRef = this.dialog.open(CustomersFormDialog,{width:"50%",data:{tenant: this.tenant}});
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
+      this.fetchCustomers()
     });
   }
 }
@@ -46,4 +47,24 @@ export class CustomersComponent {
   selector: 'customers-form-dialog',
   templateUrl: 'customers-form-dialog.html',
 })
-export class CustomersFormDialog {}
+export class CustomersFormDialog {
+  client!: Client
+
+  constructor(
+    public dialog: MatDialog,
+    @Inject(MAT_DIALOG_DATA) data: { tenant: Tenant },
+    private clientsService: ClientsService,
+    private dialogRef: MatDialogRef<CustomersFormDialog>,
+    private _snackBar: MatSnackBar
+  ) {
+
+    this.client = new Client(0,'','','','','','','',<Tenant>data.tenant)
+  }
+  saveCustomer() {
+   
+    this.clientsService.save( this.client ).subscribe((client)=>{
+      this._snackBar.open("Treatment has been saved", "Ok")
+      this.dialogRef.close();
+    })
+  }
+}

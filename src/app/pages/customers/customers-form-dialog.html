@@ -4,13 +4,13 @@
     <div class="col-md-6 col-sm-12">
       <mat-form-field class="w-100">
         <mat-label>Customer Name</mat-label>
-        <input matInput>
+        <input matInput [(ngModel)]="client.firstName">
       </mat-form-field>
     </div>
     <div class="col-md-6 col-sm-12">
       <mat-form-field class="w-100">
         <mat-label>Customer Email</mat-label>
-        <input matInput>
+        <input matInput [(ngModel)]="client.email">
       </mat-form-field>
     </div>
   </div>
@@ -19,13 +19,13 @@
     <div class="col-md-6 col-sm-12">
       <mat-form-field class="w-100">
         <mat-label>Customer Phone</mat-label>
-        <input matInput>
+        <input matInput [(ngModel)]="client.phoneNumber">
       </mat-form-field>
     </div>
     <div class="col-md-6 col-sm-12">
       <mat-form-field class="w-100">
         <mat-label>Customer Address</mat-label>
-        <input matInput>
+        <input matInput [(ngModel)]="client.address">
       </mat-form-field>
     </div>
   </div>
@@ -34,5 +34,5 @@
 </mat-dialog-content>
 <mat-dialog-actions align="end">
   <button mat-button mat-dialog-close>Cancel</button>
-  <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Save</button>
+  <button mat-button cdkFocusInitial (click)="saveCustomer()">Save</button>
 </mat-dialog-actions>

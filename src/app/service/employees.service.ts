@@ -9,6 +9,7 @@ import {Utils} from "../utils/utils";
   providedIn: 'root'
 })
 export class EmployeesService {
+  
   private apiUrl = Utils.apiBaseUrl() + '/api/employees'
   constructor(private http: HttpClient) { }
 
@@ -18,7 +19,10 @@ export class EmployeesService {
   }
 
   //save treatment
-  save(Employee: Employee): Observable<Employee> {
-    return this.http.post<Employee>(`${this.apiUrl}`, Employee);
+  save(employee: Employee): Observable<Employee> {
+    return this.http.post<Employee>(`${this.apiUrl}`, employee);
+  }
+  toggleAvailability(employee: Employee) : Observable<Employee> {
+    return this.http.put<Employee>(`${this.apiUrl}`, employee);
   }
 }

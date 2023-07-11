@@ -21,6 +21,10 @@ export class LoginComponent {
   ) {
   }
 
+  ngOnInit(){
+    this.accountsService.logout()
+  }
+
   doLogin(){
     this.accountsService.login(this.username, this.password)
       .pipe(first())

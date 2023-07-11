@@ -10,6 +10,7 @@ export class Treatment {
   maximumDuration: number
   tenant: Tenant
   category?:TreatmentCategory
+  isPromotion:boolean = false
 
   constructor(id: number, name: string, description: string, price: number, minimumDuration: number, maximumDuration: number,tenant: Tenant) {
     this.id = id;
