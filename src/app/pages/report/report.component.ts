@@ -51,6 +51,11 @@ export class ReportComponent {
     this.loadReport()
   }
 
+  getReportTotal(paymentMethod: string): number {
+    return this.bookings.filter(booking => booking.paymentMethod === paymentMethod)
+      .reduce((sum, current) => sum + current.totalAmount, 0);
+  }
+
   loadReport() {
     const startDate = moment(this.startDate).format()
     const endDate = moment(this.endDate).add(1, 'days').format()
@@ -60,7 +65,7 @@ export class ReportComponent {
       .subscribe(bookings => this.bookings = bookings)
   }
 
-  downloadFile() {
+  downloadCsv() {
     const startDate = moment(this.startDate).format()
     const endDate = moment(this.endDate).add(1, 'days').format()
     const downloadUrl = `${this.bookingService.apiUrl}/report-csv?tenantId=${this.tenant?.id}&startDate=${startDate}&endDate=${endDate}`
@@ -71,6 +76,21 @@ export class ReportComponent {
         const objectUrl = URL.createObjectURL(blob)
         a.href = objectUrl
         a.download = 'bookings.csv';
+        a.click();
+        URL.revokeObjectURL(objectUrl);
+      })
+  }
+  downloadPdf() {
+    const startDate = moment(this.startDate).format()
+    const endDate = moment(this.endDate).add(1, 'days').format()
+    const downloadUrl = `${this.bookingService.apiUrl}/report-pdf?tenantId=${this.tenant?.id}&startDate=${startDate}&endDate=${endDate}`
+    this.downloadService
+      .download(downloadUrl)
+      .subscribe(blob => {
+        const a = document.createElement('a')
+        const objectUrl = URL.createObjectURL(blob)
+        a.href = objectUrl
+        a.download = 'bookings.pdf';
         a.click();
         URL.revokeObjectURL(objectUrl);
       })
