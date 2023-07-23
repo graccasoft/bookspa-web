@@ -13,7 +13,8 @@ export class JwtInterceptor implements HttpInterceptor {
         const user = this.accountService.userValue;
         const isLoggedIn = user && user.token;
         const isApiUrl = request.url.includes("/api");
-        if (isLoggedIn && isApiUrl) {
+        const onlineBookingUrl = request.url.includes("/online-booking");
+        if ((isLoggedIn && isApiUrl) && !onlineBookingUrl) {
             request = request.clone({
                 setHeaders: {
                     Authorization: `Bearer ${user.token}`

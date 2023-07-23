@@ -6,6 +6,8 @@ import {EmployeesService} from "../../service/employees.service";
 import {Tenant} from "../../model/tenant";
 import {AccountsService} from "../../service/accounts.service";
 import {User} from "../../model/user";
+import { ConfirmDialogComponent } from 'src/app/confirm-dialog/confirm-dialog.component';
+import { DownloadFileService } from 'src/app/service/download-file.service';
 
 @Component({
   selector: 'app-employees',
@@ -23,7 +25,8 @@ export class EmployeesComponent {
     private treatmentService: EmployeesService,
     private accountsService: AccountsService,
     private employeesService: EmployeesService,
-    private _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
+    private downloadService: DownloadFileService
   ) {}
 
   ngOnInit(){
@@ -66,6 +69,40 @@ export class EmployeesComponent {
       this.fetchEmployees()
     });
   }
+
+  downloadCsv() {    
+    const downloadUrl = `${this.employeesService.apiUrl}/employees-csv?tenantId=${this.tenant?.id}`
+    this.downloadService
+      .download(downloadUrl)
+      .subscribe(blob => {
+        const a = document.createElement('a')
+        const objectUrl = URL.createObjectURL(blob)
+        a.href = objectUrl
+        a.download = 'employees.csv';
+        a.click();
+        URL.revokeObjectURL(objectUrl);
+      })
+  }
+  
+  delete(id: number) {
+    const dialog = this.dialog.open(ConfirmDialogComponent, {
+      data: {
+        title: 'Employees',
+        text: 'Are you sure you want to delete this employee?',
+        cancelText: 'No',
+        confirmText: 'Yes'
+      }
+    });
+
+    dialog.afterClosed().subscribe((confirmed: boolean) => {
+      if (confirmed) {
+        this.employeesService.delete(id)
+          .subscribe(response => { this.fetchEmployees() })
+      }
+    })
+
+  }
+
 }
 
 @Component({

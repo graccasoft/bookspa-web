@@ -3,6 +3,7 @@ import {Tenant} from "../../../model/tenant";
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {TenantsService} from "../../../service/tenants.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import { ConfirmDialogComponent } from 'src/app/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-tenants',
@@ -47,6 +48,47 @@ export class TenantsComponent {
       this.fetchTenants()
     });
   }
+
+  
+  delete(id: number) {
+    const dialog = this.dialog.open(ConfirmDialogComponent, {
+      data: {
+        title: 'Tenants',
+        text: 'Are you sure you want to update this tenant?',
+        cancelText: 'No',
+        confirmText: 'Yes'
+      }
+    });
+
+    dialog.afterClosed().subscribe((confirmed: boolean) => {
+      if (confirmed) {
+        this.tenantsService.delete(id)
+          .subscribe(response => { this.fetchTenants() })
+      }
+    })
+
+  }
+
+  toggleActive(id: number) {
+    const dialog = this.dialog.open(ConfirmDialogComponent, {
+      data: {
+        title: 'Tenants',
+        text: 'Are you sure you want to delete this tenant?',
+        cancelText: 'No',
+        confirmText: 'Yes'
+      }
+    });
+
+    dialog.afterClosed().subscribe((confirmed: boolean) => {
+      if (confirmed) {
+        this.selectTenant(id)
+        this.tenantsService.toggleActive(this.tenant)
+          .subscribe(response => { this.fetchTenants() })
+      }
+    })
+
+  }
+
 }
 
 @Component({

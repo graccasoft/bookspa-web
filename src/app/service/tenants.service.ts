@@ -33,7 +33,23 @@ export class TenantsService {
   }
 
   saveUser(user: User, tenantId:number): Observable<ApiResponse>{
-    return this.http.post<ApiResponse>(`${this.apiUrl}/${tenantId}/users`, user);
+    if( user.id && user.id > 0 ){
+      return this.http.put<ApiResponse>(`${this.apiUrl}/${tenantId}/users/${user.id}`, user);
+    }else{
+      return this.http.post<ApiResponse>(`${this.apiUrl}/${tenantId}/users`, user);
+    }
+  }
+
+  toggleActive(tenant: Tenant) : Observable<ApiResponse> {
+    return this.http.patch<ApiResponse>(`${this.apiUrl}/${tenant.id}`,tenant);
+  }
+
+  delete(tenantId: number) : Observable<ApiResponse> {
+    return this.http.delete<ApiResponse>(`${this.apiUrl}/${tenantId}`);
+  }
+
+  deleteUser(userId: number, tenantId: number) : Observable<ApiResponse> {
+    return this.http.delete<ApiResponse>(`${this.apiUrl}/${tenantId}/users/${userId}`);
   }
 
 }

@@ -9,6 +9,7 @@ export class Tenant {
   reference: string
   openingTime: string
   closingTime: string
+  isActive!:boolean
 
 
   constructor(id: number, companyName: string, companyPhone: string, companyEmail: string, companyAddress: string, contactName: string, contactPhone: string, reference: string, openingTime: string, closingTime: string) {

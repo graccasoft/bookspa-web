@@ -1,31 +1,39 @@
-<app-layout [activeMenu]="'customers'" >
-  <button mat-raised-button color="primary" (click)="openDialog()" class="mb-4" >
-    Add Customer
-  </button>
+<app-layout [activeMenu]="'customers'">
+  <div class="row">
+    <div class="col-md-12">
+      <button mat-raised-button color="primary" (click)="addNew()" class="mb-4">
+        Add Customer
+      </button>
+      <button class="btn btn-primary float-end  btn-sm" (click)="downloadCsv()">
+        Export CSV
+      </button>
+    </div>
+  </div>
+
   <table class="table table-striped table-bordered">
     <thead>
-    <tr>
-      <th>ID</th>
-      <th>Name</th>
-      <th>Phone</th>
-      <th>Address</th>
-      <th class="text-right">Actions</th>
-    </tr>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Phone</th>
+        <th>Address</th>
+        <th class="text-right">Actions</th>
+      </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let client of clients">
-      <td>{{client.id}}</td>
-      <td>{{client.firstName + ' ' + client.surname}}</td>
-      <td>{{client.phoneNumber}}</td>
-      <td>{{client.address}}</td>
-      <td class="text-right">
-        <button mat-button [matMenuTriggerFor]="menu" mat-raised-button color="primary">Actions</button>
-        <mat-menu #menu="matMenu">
-          <button mat-menu-item>Reservations</button>
-          <button mat-menu-item>Check-In</button>
-        </mat-menu>
-      </td>
-    </tr>
+      <tr *ngFor="let client of clients">
+        <td>{{client.id}}</td>
+        <td>{{client.firstName + ' ' + client.surname}}</td>
+        <td>{{client.phoneNumber}}</td>
+        <td>{{client.address}}</td>
+        <td class="text-right">
+          <button mat-button [matMenuTriggerFor]="menu" mat-raised-button color="primary">Actions</button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="delete(client.id)">Delete</button>
+            <button mat-menu-item (click)="edit(client.id)">Edit</button>
+          </mat-menu>
+        </td>
+      </tr>
     </tbody>
   </table>
 

@@ -24,9 +24,8 @@
       <td class="text-right">
         <button mat-button [matMenuTriggerFor]="menu" mat-raised-button color="primary">Actions</button>
         <mat-menu #menu="matMenu">
-          <button mat-menu-item data-bs-toggle="modal" data-bs-target="#treatment-form" (click)="editUser(tenant.id)">Edit</button>
-          <button mat-menu-item>Reset Password</button>
-          <button mat-menu-item>Delete</button>
+          <button mat-menu-item data-bs-toggle="modal" data-bs-target="#treatment-form" (click)="editUser(user.id)">Edit</button>
+          <button mat-menu-item (click)="delete(user.id)">Delete</button>
         </mat-menu>
       </td>
     </tr>

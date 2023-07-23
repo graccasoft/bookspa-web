@@ -27,13 +27,19 @@
         {{tenant.companyPhone}}
       </td>
       <td>{{tenant.reference}}</td>
-      <td><span class="badge text-bg-success">Active</span></td>
+      <td>
+        <span class="badge text-bg-success" *ngIf="tenant.isActive">Active</span>
+        <span class="badge text-bg-warning" *ngIf="!tenant.isActive">Suspended</span>
+      </td>
       <td class="text-right">
         <button mat-button [matMenuTriggerFor]="menu" mat-raised-button color="primary">Actions</button>
         <mat-menu #menu="matMenu">
           <button mat-menu-item data-bs-toggle="modal" data-bs-target="#treatment-form" (click)="editTenant(tenant.id)">Edit</button>
+          <button mat-menu-item data-bs-toggle="modal" data-bs-target="#treatment-form" (click)="toggleActive(tenant.id)">
+            {{tenant.isActive ? "Suspend" : "Activate"}}
+          </button>
           <a mat-menu-item href="users/{{tenant.id}}" >Users</a>
-          <button mat-menu-item>Delete</button>
+          <button mat-menu-item (click)="delete(tenant.id)">Delete</button>
         </mat-menu>
       </td>
     </tr>

@@ -70,7 +70,6 @@ export class ReservePublicComponent {
     });
 
 
-    this.tomorrow.setDate(this.tomorrow.getDate() + 1)
 
   }
 

@@ -27,6 +27,7 @@
         <mat-form-field class="w-100">
           <mat-label>Password</mat-label>
           <input matInput [(ngModel)]="user.password" name="password">
+          <mat-hint *ngIf="user.id">Type new password to change password</mat-hint>
         </mat-form-field>
       </div>
     </div>

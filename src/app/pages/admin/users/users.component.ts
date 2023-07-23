@@ -5,6 +5,7 @@ import {User} from "../../../model/user";
 import {ActivatedRoute} from "@angular/router";
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import { ConfirmDialogComponent } from 'src/app/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-users',
@@ -43,8 +44,9 @@ export class UsersComponent {
   selectUser (id:number){
     this.user = this.users.filter(u=>  u.id === id)[0]
   }
-  editUser(id:number){
-    this.selectUser(id)
+  editUser(id:number|undefined){
+    this.selectUser(id as number)
+    this.user.password = ""
     this.openDialog()
   }
   openDialog() {
@@ -53,6 +55,24 @@ export class UsersComponent {
     dialogRef.afterClosed().subscribe(result => {
       this.fetchUsers()
     });
+  }
+  delete(id: number | undefined) {
+    const dialog = this.dialog.open(ConfirmDialogComponent, {
+      data: {
+        title: 'Users',
+        text: 'Are you sure you want to update this user?',
+        cancelText: 'No',
+        confirmText: 'Yes'
+      }
+    });
+
+    dialog.afterClosed().subscribe((confirmed: boolean) => {
+      if (confirmed) {
+        this.tenantsService.deleteUser(id as number, this.tenant.id)
+          .subscribe(response => { this.fetchUsers() })
+      }
+    })
+
   }
 }
 

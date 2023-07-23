@@ -65,7 +65,7 @@ export class TreatmentsComponent {
   deleteTreatment(id:number){
     const dialog = this.dialog.open(ConfirmDialogComponent, {
       data: {
-        title: 'Bookings',
+        title: 'Treatments',
         text: 'Are you sure you want to delete this treatment?',
         cancelText: 'No',
         confirmText: 'Yes'
