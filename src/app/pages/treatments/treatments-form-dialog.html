@@ -1,4 +1,4 @@
-<h2 mat-dialog-title>Treatment Form</h2>
+<h2 mat-dialog-title>{{title}} Form</h2>
 <mat-dialog-content>
   <form (ngSubmit)="saveTreatment()" #treatmentForm="ngForm">
     <div class="row">
@@ -14,13 +14,13 @@
     <div class="row">
       <div class="col-sm-12 col-md-6">
         <mat-form-field class="w-100">
-          <mat-label>Treatment Name</mat-label>
+          <mat-label>{{title}} Name</mat-label>
           <input matInput [(ngModel)]="treatment.name" name="name">
         </mat-form-field>
       </div>
       <div class="col-sm-12 col-md-6">
         <mat-form-field class="w-100">
-          <mat-label>Treatment Description</mat-label>
+          <mat-label>{{title}} Description</mat-label>
           <input matInput [(ngModel)]="treatment.description" name="description">
         </mat-form-field>
       </div>

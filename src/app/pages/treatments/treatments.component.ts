@@ -65,8 +65,8 @@ export class TreatmentsComponent {
   deleteTreatment(id:number){
     const dialog = this.dialog.open(ConfirmDialogComponent, {
       data: {
-        title: 'Treatments',
-        text: 'Are you sure you want to delete this treatment?',
+        title: this.isPromotions ? 'Promotions' : 'Treatments',
+        text: 'Are you sure you want to delete this record?',
         cancelText: 'No',
         confirmText: 'Yes'
       }
@@ -109,6 +109,7 @@ export class TreatmentsFormDialog {
   treatment!: Treatment
   categories: TreatmentCategory[] = []
   isPromotions = false
+  title = 'Treatment'
   
   constructor(
     @Inject(MAT_DIALOG_DATA) data: { treatment: Treatment, isPromotions:boolean },
@@ -118,6 +119,7 @@ export class TreatmentsFormDialog {
     private _snackBar: MatSnackBar) {
     this.treatment = data.treatment
     this.isPromotions = data.isPromotions
+    this.title = this.isPromotions ? 'Promotion' : 'Treatment'
   }
 
   ngOnInit(){
@@ -130,7 +132,7 @@ export class TreatmentsFormDialog {
   saveTreatment() {
     this.treatment.isPromotion = this.isPromotions
     this.treatmentService.save( this.treatment ).subscribe((treatment)=>{
-      this._snackBar.open("Treatment has been saved", "Ok")
+      this._snackBar.open( this.isPromotions ? 'Promotion has been saved' : 'Treatment has been saved', "Ok")
       this.dialogRef.close();
     })
   }

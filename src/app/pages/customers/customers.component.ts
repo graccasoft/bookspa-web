@@ -22,7 +22,8 @@ export class CustomersComponent {
     public dialog: MatDialog,
     private clientsService: ClientsService,
     private accountsService: AccountsService,
-    private downloadService: DownloadFileService
+    private downloadService: DownloadFileService,
+    private _snackBar: MatSnackBar
   ) { }
 
   ngOnInit() {
@@ -82,6 +83,7 @@ export class CustomersComponent {
       if (confirmed) {
         this.clientsService.delete(id)
           .subscribe(response => { this.fetchCustomers() })
+          this._snackBar.open( 'Customer has been deleted.', "Ok")
       }
     })
 

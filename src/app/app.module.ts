@@ -46,6 +46,7 @@ import { AdminLayoutComponent } from './pages/admin/admin-layout/admin-layout.co
 import { TenantSettingsComponent } from './pages/tenant-settings/tenant-settings.component';
 import { BookingDetailsComponent } from './pages/booking-details/booking-details.component';
 import { ReportComponent } from './pages/report/report.component';
+import { DataTablesModule } from 'angular-datatables';
 
 @NgModule({
   declarations: [
@@ -96,7 +97,8 @@ import { ReportComponent } from './pages/report/report.component';
     MatMenuModule,
     MatDialogModule,
     MatStepperModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    DataTablesModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

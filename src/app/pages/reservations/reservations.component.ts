@@ -8,6 +8,8 @@ import {ConfirmDialogComponent} from "../../confirm-dialog/confirm-dialog.compon
 import {AccountsService} from "../../service/accounts.service";
 import {User} from "../../model/user";
 import { Utils } from 'src/app/utils/utils';
+import { FormGroup, FormControl } from '@angular/forms';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-reservations',
@@ -28,6 +30,12 @@ export class ReservationsComponent {
   ) {
   }
 
+  today = new Date();
+  range = new FormGroup({
+    start: new FormControl<Date | null>(new Date(this.today.getFullYear(), this.today.getMonth(), 1)),
+    end: new FormControl<Date | null>(new Date(this.today.getFullYear(), this.today.getMonth() + 1, 0)),
+  });
+
   ngOnInit(){
     const user = this.accountsService.userValue as User
     if (user) {
@@ -38,8 +46,13 @@ export class ReservationsComponent {
   }
 
   fetchBookings(){
-    // @ts-ignore
-    this.bookingService.getTenantBookings(this.tenant.id)
+    if( !this.range.value.start ||  !this.range.value.end )
+      return;
+
+    const startDate = moment(this.range.value.start).format()
+    const endDate = moment(this.range.value.end).format()
+    //@ts-ignore
+    this.bookingService.getTenantBookings(this.tenant.id, startDate, endDate)
       .subscribe(bookings=> this.bookings = bookings)
   }
 
@@ -101,7 +114,7 @@ export class ReservationPaymentFormDialog {
 
   savePayment() {
     this.bookingService.savePayment( this.booking ).subscribe((booking)=>{
-      this._snackBar.open("Treatment has been saved", "Ok")
+      this._snackBar.open("Reservation has been saved", "Ok")
       this.dialogRef.close();
     })
   }

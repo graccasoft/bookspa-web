@@ -23,8 +23,8 @@ export class BookingService {
     return this.http.post<Booking>(`${this.apiUrl}`, booking);
   }
 
-  getTenantBookings(tenantId: number): Observable<Booking[]>{
-    return this.http.get<Booking[]>(`${this.apiUrl}?tenantId=${tenantId}`)
+  getTenantBookings(tenantId: number, startDate: String, endDate: String): Observable<Booking[]>{
+    return this.http.get<Booking[]>(`${this.apiUrl}?tenantId=${tenantId}&startDate=${startDate}&endDate=${endDate}`)
   }
 
   cancelBooking(bookingId: number): Observable<any>{

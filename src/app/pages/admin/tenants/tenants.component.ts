@@ -54,7 +54,7 @@ export class TenantsComponent {
     const dialog = this.dialog.open(ConfirmDialogComponent, {
       data: {
         title: 'Tenants',
-        text: 'Are you sure you want to update this tenant?',
+        text: 'Are you sure you want to delete this tenant?',
         cancelText: 'No',
         confirmText: 'Yes'
       }
@@ -73,7 +73,7 @@ export class TenantsComponent {
     const dialog = this.dialog.open(ConfirmDialogComponent, {
       data: {
         title: 'Tenants',
-        text: 'Are you sure you want to delete this tenant?',
+        text: 'Are you sure you want to suspend/unsuspend this tenant?',
         cancelText: 'No',
         confirmText: 'Yes'
       }
