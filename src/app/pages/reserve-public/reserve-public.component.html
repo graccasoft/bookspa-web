@@ -49,6 +49,7 @@
                   <div class="w-full flex flex-col justify-between p-4 rounded border text-start">
                     <div *ngFor="let treatment of bookingTreatments" class="mb-1">
                       <strong>{{treatment.name}}</strong><br>
+                      {{treatment.description}}<br>
                       {{ Utils.formatDuration(treatment.minimumDuration)}}
                       <span class="float-end">{{ treatment.price | currency:'ZAR' }}</span>
                     </div>
@@ -152,7 +153,8 @@
                 <div class="col-md-6 col-sm-12">
                   <h5 class="mb-1">Treatments</h5>
                   <div *ngFor="let treatment of bookingTreatments" class="mb-1">
-                    <strong>{{treatment.name}}</strong>
+                    <strong>{{treatment.name}}</strong><br>
+                    {{treatment.description}}<br>
                     ( {{ Utils.formatDuration(treatment.minimumDuration)}} )
                     <span class="float-end">{{ treatment.price | currency:'ZAR' }}</span>
                   </div>

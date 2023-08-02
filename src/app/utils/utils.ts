@@ -37,7 +37,7 @@ export class Utils {
 
   //ffs
   static apiBaseUrl(): string{
-    return 'https://app-backend.redkokia.com'
-    //return ''
+    //return 'https://app-backend.redkokia.com'
+    return ''
   }
 }

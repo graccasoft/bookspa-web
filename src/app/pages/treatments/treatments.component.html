@@ -20,7 +20,7 @@
       <td>{{ treatment.id }}</td>
       <td>{{ treatment.name }}</td>
       <td>{{ treatment.category?.name }}</td>
-      <td>{{ treatment.price }}</td>
+      <td>{{ treatment.price | currency: 'ZAR' }}</td>
       <td>{{ Utils.formatDuration( treatment.minimumDuration) }}</td>
       <td>Active</td>
       <td class="text-right">

@@ -36,7 +36,8 @@
       <div class="col-sm-12 col-md-6">
         <mat-form-field class="w-100">
           <mat-label>Price</mat-label>
-          <input matInput [(ngModel)]="treatment.price" name="price">
+          <input type="number" matInput [(ngModel)]="treatment.price" name="price">
+          <span matTextPrefix>ZAR&nbsp;</span>
         </mat-form-field>
       </div>
       <div class="col-sm-12 col-md-6"></div>
