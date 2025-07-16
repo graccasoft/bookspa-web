@@ -46,7 +46,11 @@ import { AdminLayoutComponent } from './pages/admin/admin-layout/admin-layout.co
 import { TenantSettingsComponent } from './pages/tenant-settings/tenant-settings.component';
 import { BookingDetailsComponent } from './pages/booking-details/booking-details.component';
 import { ReportComponent } from './pages/report/report.component';
-import { DataTablesModule } from 'angular-datatables';
+import { IndustrySettingsComponent } from './pages/admin/industry-settings/industry-settings.component';
+import { CategoryDialogComponent } from './pages/admin/industry-settings/category-dialog/category-dialog.component';
+import { IndustryDialogComponent } from './pages/admin/industry-settings/industry-dialog/industry-dialog.component';
+import {MatTabsModule} from "@angular/material/tabs";
+import {MatTableModule} from "@angular/material/table";
 
 @NgModule({
   declarations: [
@@ -72,7 +76,10 @@ import { DataTablesModule } from 'angular-datatables';
     AdminLayoutComponent,
     TenantSettingsComponent,
     BookingDetailsComponent,
-    ReportComponent
+    ReportComponent,
+    IndustrySettingsComponent,
+    CategoryDialogComponent,
+    IndustryDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -98,7 +105,8 @@ import { DataTablesModule } from 'angular-datatables';
     MatDialogModule,
     MatStepperModule,
     ReactiveFormsModule,
-    DataTablesModule
+    MatTabsModule,
+    MatTableModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

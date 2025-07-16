@@ -8,9 +8,15 @@
     <ul class="nav nav-pills flex-column mb-auto">
 
       <li>
-        <a [routerLink]="['/tenants']" class="nav-link text-white" [ngClass]="{'active': activeMenu === 'tenants'}">
+        <a [routerLink]="['/tenants']" class="nav-link text-white" routerLinkActive="active">
           <mat-icon class="me-2">groups</mat-icon>
           Tenants
+        </a>
+      </li>
+      <li>
+        <a [routerLink]="['/industry-settings']" class="nav-link text-white" routerLinkActive="active">
+          <mat-icon class="me-2">groups</mat-icon>
+          Industry Settings
         </a>
       </li>
     </ul>
@@ -34,7 +40,12 @@
       </header>
     </div>
 
-    <div class="p-4">
+    <div class="px-4">
+      <div class="mb-8" *ngIf="pageTitle">
+        <h2 class="mb-2">{{pageTitle}}</h2>
+        <h5 class="text-body-tertiary fw-semibold" *ngIf="pageSubTitle">{{pageSubTitle}}</h5>
+      </div>
+
       <ng-content></ng-content>
     </div>
 

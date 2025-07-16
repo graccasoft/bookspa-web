@@ -14,6 +14,7 @@ export class TenantsComponent {
 
   tenant: Tenant = new Tenant(0,'','','','','','','','','')
   tenants: Tenant[] = []
+  displayedColumns: string[] = [ 'name','phone', 'email', 'contact', 'reference', 'status',  'actions']
 
   constructor(
     public dialog: MatDialog,
@@ -49,7 +50,7 @@ export class TenantsComponent {
     });
   }
 
-  
+
   delete(id: number) {
     const dialog = this.dialog.open(ConfirmDialogComponent, {
       data: {

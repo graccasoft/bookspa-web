@@ -1,38 +1,48 @@
-<app-admin-layout [activeMenu]="'tenants'" >
+<app-admin-layout [activeMenu]="'tenants'" [pageTitle]="'Tenants'" [pageSubTitle]="'Manage Tenants'">
 
   <button mat-raised-button color="primary" (click)="newTenant()" class="mb-4" >
+    <mat-icon>add</mat-icon>
     Add Tenant
   </button>
-  <table class="table table-striped table-bordered">
-    <thead>
-    <tr>
-      <th>ID</th>
-      <th>Name</th>
-      <th>Phone Number</th>
-      <th>Email</th>
-      <th>Contact</th>
-      <th>Reference</th>
-      <th>Subscription Status</th>
-      <th class="text-right">Actions</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr *ngFor=" let tenant of tenants">
-      <td>{{ tenant.id }}</td>
-      <td>{{ tenant.companyName }}</td>
-      <td>{{ tenant.companyPhone }}</td>
-      <td>{{tenant.companyEmail}}</td>
-      <td>
-        {{tenant.contactName}}<br>
-        {{tenant.companyPhone}}
-      </td>
-      <td>{{tenant.reference}}</td>
-      <td>
-        <span class="badge text-bg-success" *ngIf="tenant.isActive">Active</span>
-        <span class="badge text-bg-warning" *ngIf="!tenant.isActive">Suspended</span>
-      </td>
-      <td class="text-right">
-        <button mat-button [matMenuTriggerFor]="menu" mat-raised-button color="primary">Actions</button>
+
+  <table mat-table [dataSource]="tenants" class="mat-elevation-z8">
+
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef> Name </th>
+      <td mat-cell *matCellDef="let element"> {{element.companyName}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="phone">
+      <th mat-header-cell *matHeaderCellDef> Phone Number </th>
+      <td mat-cell *matCellDef="let element"> {{element.companyPhone}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef> Email </th>
+      <td mat-cell *matCellDef="let element"> {{element.companyEmail}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="contact">
+      <th mat-header-cell *matHeaderCellDef> Contact </th>
+      <td mat-cell *matCellDef="let element"> {{element.contactName}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="reference">
+      <th mat-header-cell *matHeaderCellDef> Reference </th>
+      <td mat-cell *matCellDef="let element"> {{element.reference}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef> Status </th>
+      <td mat-cell *matCellDef="let element"> {{tenant.isActive ? "Active" : "Suspended"}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef> Actions </th>
+      <td mat-cell *matCellDef="let element">
+        <button mat-button [matMenuTriggerFor]="menu">
+          <mat-icon>more_vert</mat-icon>
+        </button>
         <mat-menu #menu="matMenu">
           <button mat-menu-item data-bs-toggle="modal" data-bs-target="#treatment-form" (click)="editTenant(tenant.id)">Edit</button>
           <button mat-menu-item data-bs-toggle="modal" data-bs-target="#treatment-form" (click)="toggleActive(tenant.id)">
@@ -42,8 +52,9 @@
           <button mat-menu-item (click)="delete(tenant.id)">Delete</button>
         </mat-menu>
       </td>
-    </tr>
-    </tbody>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
 
 

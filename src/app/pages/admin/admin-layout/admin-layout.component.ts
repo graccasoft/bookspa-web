@@ -8,6 +8,8 @@ import {AccountsService} from "../../../service/accounts.service";
 })
 export class AdminLayoutComponent {
   @Input() activeMenu = "tenants"
+  @Input() pageTitle = ""
+  @Input() pageSubTitle = ""
 
   constructor(
     private accountsService: AccountsService

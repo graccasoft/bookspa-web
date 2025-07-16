@@ -1,0 +1,102 @@
+<app-admin-layout [activeMenu]="'industry-settings'" [pageTitle]="'Industry Settings'"
+                  [pageSubTitle]="'Manage Industries and Categories'">
+
+
+  <mat-tab-group>
+    <mat-tab label="Industries">
+      <ng-template matTabContent>
+        <div class="py-4 w-100 border-top">
+          <button mat-raised-button color="primary" (click)="industryModal()" class="mb-4">
+            <mat-icon>add</mat-icon>
+            Add Industry
+          </button>
+
+          <div class="row">
+            <div class="col-sm-12 px-3">
+              <table mat-table [dataSource]="industries" class="mat-elevation-z8">
+
+                <ng-container matColumnDef="id">
+                  <th mat-header-cell *matHeaderCellDef> Id.</th>
+                  <td mat-cell *matCellDef="let element"> {{ element.id }}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="name">
+                  <th mat-header-cell *matHeaderCellDef> Name</th>
+                  <td mat-cell *matCellDef="let element"> {{ element.name }}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="actions">
+                  <th mat-header-cell *matHeaderCellDef> Actions</th>
+                  <td mat-cell *matCellDef="let element">
+                    <button mat-button [matMenuTriggerFor]="menu">
+                      <mat-icon>more_vert</mat-icon>
+                    </button>
+                    <mat-menu #menu="matMenu">
+                      <button mat-menu-item (click)="industryModal(element)">Edit</button>
+                      <button mat-menu-item>Disable</button>
+                    </mat-menu>
+                  </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="industryDisplayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: industryDisplayedColumns;"></tr>
+              </table>
+            </div>
+          </div>
+
+        </div>
+      </ng-template>
+
+    </mat-tab>
+
+    <mat-tab label="Categories">
+      <ng-template matTabContent>
+        <div class="py-4 w-100 border-top">
+          <button mat-raised-button color="primary" (click)="categoryModal()" class="mb-4">
+            <mat-icon>add</mat-icon>
+            Add Category
+          </button>
+          <div class="row">
+            <div class="col-sm-12 px-3">
+
+              <table mat-table [dataSource]="categories" class="mat-elevation-z8">
+
+                <ng-container matColumnDef="id">
+                  <th mat-header-cell *matHeaderCellDef> Id.</th>
+                  <td mat-cell *matCellDef="let element"> {{ element.id }}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="name">
+                  <th mat-header-cell *matHeaderCellDef> Name</th>
+                  <td mat-cell *matCellDef="let element"> {{ element.name }}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="industry">
+                  <th mat-header-cell *matHeaderCellDef> Industry</th>
+                  <td mat-cell *matCellDef="let element"> {{ element.industry ? element.industry.name : '' }}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="actions">
+                  <th mat-header-cell *matHeaderCellDef> Actions</th>
+                  <td mat-cell *matCellDef="let element">
+                    <button mat-button [matMenuTriggerFor]="menu">
+                      <mat-icon>more_vert</mat-icon>
+                    </button>
+                    <mat-menu #menu="matMenu">
+                      <button mat-menu-item (click)="categoryModal(element)">Edit</button>
+                      <button mat-menu-item>Disable</button>
+                    </mat-menu>
+                  </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="categoryDisplayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: categoryDisplayedColumns;"></tr>
+              </table>
+            </div>
+          </div>
+
+        </div>
+      </ng-template>
+    </mat-tab>
+
+  </mat-tab-group>
+
+</app-admin-layout>

@@ -17,8 +17,13 @@ export class CategoryService {
     return this.http.get<TreatmentCategory[]>(`${this.apiUrl}`);
   }
 
-  //save treatment
+  //save category
   save(category: TreatmentCategory): Observable<TreatmentCategory> {
     return this.http.post<TreatmentCategory>(`${this.apiUrl}`, category);
+  }
+
+  //update category
+  update(id: number, category: TreatmentCategory): Observable<TreatmentCategory> {
+    return this.http.put<TreatmentCategory>(`${this.apiUrl}/${id}`, category);
   }
 }
