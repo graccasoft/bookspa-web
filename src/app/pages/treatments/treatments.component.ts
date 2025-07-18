@@ -1,4 +1,4 @@
-import {Component, Inject} from '@angular/core';
+import {Component, Inject, ViewChild} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {TreatmentService} from "../../service/treatment.service";
 import {Treatment} from "../../model/treatment";
@@ -11,6 +11,8 @@ import {AccountsService} from "../../service/accounts.service";
 import {User} from "../../model/user";
 import { ConfirmDialogComponent } from 'src/app/confirm-dialog/confirm-dialog.component';
 import { ActivatedRoute } from '@angular/router';
+import {MatTableDataSource} from "@angular/material/table";
+import {MatPaginator} from "@angular/material/paginator";
 
 @Component({
   selector: 'app-treatments',
@@ -20,9 +22,18 @@ import { ActivatedRoute } from '@angular/router';
 export class TreatmentsComponent {
   protected readonly Utils = Utils;
   treatments: Treatment[] = []
+  filteredTreatments = new MatTableDataSource<Treatment>([]);
   tenant!: Tenant | undefined
   treatment: Treatment = new Treatment(0,'','',0,0,0, <Tenant>this.tenant)
   isPromotions = false
+  displayedColumns = ['name', 'price', 'duration', 'category', 'actions'];
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+
+  ngAfterViewInit() {
+    this.filteredTreatments.paginator = this.paginator;
+  }
+
   constructor(
     public dialog: MatDialog,
     private treatmentService: TreatmentService,
@@ -39,23 +50,23 @@ export class TreatmentsComponent {
       }
       this.fetchTreatments()
     });
-    
+
   }
 
   fetchTreatments(){
-    
+    if(!this.tenant) return;
     if(!this.isPromotions){
-      // @ts-ignore
       this.treatmentService.get(this.tenant.id).subscribe((treatments)=>{
         this.treatments = treatments
+        this.filteredTreatments.data = treatments;
       })
     }else{
-      // @ts-ignore
       this.treatmentService.getPromotions(this.tenant.id).subscribe((treatments)=>{
         this.treatments = treatments
+        this.filteredTreatments.data = treatments;
       })
     }
-    
+
   }
 
   selectTreatment (id:number){
@@ -79,7 +90,7 @@ export class TreatmentsComponent {
         })
       }
     })
-    
+
   }
 
   newTreatment(){
@@ -98,6 +109,18 @@ export class TreatmentsComponent {
     });
   }
 
+  applyFilter(event: KeyboardEvent) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    if (filterValue.trim() === '') {
+      this.filteredTreatments.data = this.treatments;
+      return;
+    }
+    this.filteredTreatments.data = this.treatments.filter(u => {
+      u.name?.toLowerCase().includes(filterValue.toLowerCase()) ||
+      u.category?.name?.toLowerCase().includes(filterValue.toLowerCase());
+    });
+  }
+
 }
 @Component({
   selector: 'treatments-form-dialog',
@@ -110,12 +133,12 @@ export class TreatmentsFormDialog {
   categories: TreatmentCategory[] = []
   isPromotions = false
   title = 'Treatment'
-  
+
   constructor(
     @Inject(MAT_DIALOG_DATA) data: { treatment: Treatment, isPromotions:boolean },
     private treatmentService: TreatmentService,
     private categoryService: CategoryService,
-    private dialogRef: MatDialogRef<TreatmentsFormDialog>,    
+    private dialogRef: MatDialogRef<TreatmentsFormDialog>,
     private _snackBar: MatSnackBar) {
     this.treatment = data.treatment
     this.isPromotions = data.isPromotions
@@ -126,7 +149,7 @@ export class TreatmentsFormDialog {
     this.categoryService.get().subscribe(
       categories=> this.categories = categories
     )
-    
+
   }
 
   saveTreatment() {

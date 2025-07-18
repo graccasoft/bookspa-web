@@ -1,3 +1,5 @@
+import {Industry} from "./industry";
+
 export class Tenant {
   id: number
   companyName: string
@@ -9,7 +11,8 @@ export class Tenant {
   reference: string
   openingTime: string
   closingTime: string
-  isActive!:boolean
+  isActive?:boolean
+  industry?: Industry
 
 
   constructor(id: number, companyName: string, companyPhone: string, companyEmail: string, companyAddress: string, contactName: string, contactPhone: string, reference: string, openingTime: string, closingTime: string) {

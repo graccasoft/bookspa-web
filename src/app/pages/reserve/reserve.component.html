@@ -1,4 +1,4 @@
-<app-layout>
+<app-layout  [pageTitle]="'Bookings'" [pageSubTitle]="'Place a Booking'">
 
   <div class="row" *ngIf="tenant">
     <div class="col-md-4 col-sm-12">
@@ -35,8 +35,8 @@
               employee.surname}}</mat-option>
           </mat-select>
         </div>
-        
-        <button (click)="fetchTimeSlots()" class="btn btn-primary" 
+
+        <button (click)="fetchTimeSlots()" class="btn btn-primary"
         [disabled]="(bookingTreatments.length ==0 && employee.id ==0)">Find available slots</button>
 
         </div>
@@ -110,11 +110,11 @@
           </div>
         </form>
 
-        
+
         <div class="row">
           <div class="col-md-6 col-sm-12">
             <button *ngIf="!isLoading" (click)="saveBooking()" class="btn btn-primary border">Confirm Booking</button>
-              
+
               <button *ngIf="isLoading" class="btn btn-primary border" type="button" disabled>
                 <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                 Placing booking...

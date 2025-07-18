@@ -1,43 +1,75 @@
-<app-layout [activeMenu]="'employees'">
+<app-layout [activeMenu]="'employees'" [pageTitle]="'Employees'"
+            [pageSubTitle]="'Manage Employees'">
   <div class="row">
     <div class="col-md-12">
       <button mat-raised-button color="primary" (click)="newEmployee()" class="mb-4">
+        <mat-icon>add</mat-icon>
         Add Employee
       </button>
-      <button class="btn btn-primary float-end  btn-sm" (click)="downloadCsv()">
+      <button  mat-raised-button color="primary" class="float-end" (click)="downloadCsv()">
+        <mat-icon>file_download</mat-icon>
         Export CSV
       </button>
     </div>
   </div>
-  <table class="table table-striped table-bordered">
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Name</th>
-        <th>Phone Number</th>
-        <th>Is Available</th>
-        <th class="text-right">Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor=" let employee of employees">
-        <td>{{ employee.id }}</td>
-        <td>{{ employee.firstName }} {{ employee.surname }}</td>
-        <td>{{ employee.phoneNumber }}</td>
-        <td> <span *ngIf="employee.isAvailable">Yes</span> <span *ngIf="!employee.isAvailable">No</span> </td>
-        <td class="text-right">
-          <button mat-button [matMenuTriggerFor]="menu" mat-raised-button color="primary">Actions</button>
+
+  <div class="mat-elevation-z8">
+    <div class="row p-2">
+      <div class="col-md-12">
+        <mat-form-field class="w-100">
+          <mat-label>Filter</mat-label>
+          <input matInput placeholder="Type to filter" (keyup)="applyFilter($event)"
+                 #input>
+          <mat-icon matPrefix>search</mat-icon>
+        </mat-form-field>
+      </div>
+    </div>
+    <table mat-table [dataSource]="filteredEmployees">
+
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef> Id</th>
+        <td mat-cell *matCellDef="let element"> {{ element.id }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef> Name</th>
+        <td mat-cell *matCellDef="let element"> {{ element.firstName + ' ' + element.surname }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="phone">
+        <th mat-header-cell *matHeaderCellDef> Phone</th>
+        <td mat-cell *matCellDef="let element"> {{ element.phoneNumber }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef> Status</th>
+        <td mat-cell *matCellDef="let element">
+          <span *ngIf="element.isAvailable">Yes</span> <span *ngIf="!element.isAvailable">No</span>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef> Actions</th>
+        <td mat-cell *matCellDef="let element">
+          <button mat-button [matMenuTriggerFor]="menu">
+            <mat-icon>more_vert</mat-icon>
+          </button>
           <mat-menu #menu="matMenu">
             <button mat-menu-item data-bs-toggle="modal" data-bs-target="#treatment-form"
-              (click)="editEmployee(employee.id)">Edit</button>
+                    (click)="editEmployee(element.id)">Edit</button>
             <button mat-menu-item data-bs-toggle="modal" data-bs-target="#treatment-form"
-              (click)="toggleAvailability(employee.id)">Change Availability</button>
-            <button mat-menu-item (click)="delete(employee.id)">Delete</button>
+                    (click)="toggleAvailability(element.id)">Change Availability</button>
+            <button mat-menu-item (click)="delete(element.id)">Delete</button>
           </mat-menu>
         </td>
-      </tr>
-    </tbody>
-  </table>
-
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]"
+                   showFirstLastButtons
+                   aria-label="Select page">
+    </mat-paginator>
+  </div>
 
 </app-layout>

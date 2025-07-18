@@ -1,38 +1,69 @@
-<app-layout [activeMenu]=" isPromotions ? 'promotions' : 'treatments'" >
+<app-layout [activeMenu]=" isPromotions ? 'promotions' : 'treatments'"
+            [pageTitle]=" isPromotions ? 'Promotions' : 'Treatments'"
+            [pageSubTitle]=" isPromotions ? 'Manage Promotions' : 'Manage Treatments'">
 
-  <button mat-raised-button color="primary" (click)="newTreatment()" class="mb-4" >
-    Add {{isPromotions ? 'Promotion' : 'Treatment'}}
+
+  <button mat-raised-button color="primary" (click)="newTreatment()" class="mb-4">
+    <mat-icon>add</mat-icon>
+    Add {{ isPromotions ? 'Promotion' : 'Treatment' }}
   </button>
-  <table class="table table-striped table-bordered">
-    <thead>
-    <tr>
-      <th>ID</th>
-      <th>Name</th>
-      <th>Category</th>
-      <th>Price</th>
-      <th>Duration</th>
-      <th>Status</th>
-      <th class="text-right">Actions</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr *ngFor=" let treatment of treatments">
-      <td>{{ treatment.id }}</td>
-      <td>{{ treatment.name }}</td>
-      <td>{{ treatment.category?.name }}</td>
-      <td>{{ treatment.price | currency: 'ZAR' }}</td>
-      <td>{{ Utils.formatDuration( treatment.minimumDuration) }}</td>
-      <td>Active</td>
-      <td class="text-right">
-        <button mat-button [matMenuTriggerFor]="menu" mat-raised-button color="primary">Actions</button>
-        <mat-menu #menu="matMenu">
-          <button mat-menu-item data-bs-toggle="modal" data-bs-target="#treatment-form" (click)="editTreatment(treatment.id)">Edit</button>
-          <button mat-menu-item  (click)="deleteTreatment(treatment.id)">Delete</button>
-        </mat-menu>
-      </td>
-    </tr>
-    </tbody>
-  </table>
+  <div class="mat-elevation-z8">
+    <div class="row p-2">
+      <div class="col-md-12">
+        <mat-form-field class="w-100">
+          <mat-label>Filter</mat-label>
+          <input matInput placeholder="Type to filter" (keyup)="applyFilter($event)"
+                 #input>
+          <mat-icon matPrefix>search</mat-icon>
+        </mat-form-field>
+      </div>
+    </div>
+    <table mat-table [dataSource]="filteredTreatments">
+
+
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef> Name</th>
+        <td mat-cell *matCellDef="let element"> {{ element.name }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="category">
+        <th mat-header-cell *matHeaderCellDef> Category</th>
+        <td mat-cell *matCellDef="let element"> {{ element.category?.name }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="price">
+        <th mat-header-cell *matHeaderCellDef> Price</th>
+        <td mat-cell *matCellDef="let element"> {{ element.price | currency: 'ZAR' }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="duration">
+        <th mat-header-cell *matHeaderCellDef> Duration</th>
+        <td mat-cell *matCellDef="let element"> {{ Utils.formatDuration(element.minimumDuration) }}</td>
+      </ng-container>
+
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef> Actions</th>
+        <td mat-cell *matCellDef="let element">
+          <button mat-button [matMenuTriggerFor]="menu">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item data-bs-toggle="modal" data-bs-target="#treatment-form"
+                    (click)="editTreatment(treatment.id)">Edit
+            </button>
+            <button mat-menu-item (click)="deleteTreatment(treatment.id)">Delete</button>
+          </mat-menu>
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <mat-paginator [pageSizeOptions]="[ 10, 20, 50]"
+                   showFirstLastButtons
+                   aria-label="Select page">
+    </mat-paginator>
+  </div>
 
 
 </app-layout>

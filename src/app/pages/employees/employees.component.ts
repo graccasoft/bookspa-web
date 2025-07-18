@@ -1,4 +1,4 @@
-import {Component, Inject} from '@angular/core';
+import {Component, Inject, ViewChild} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {Employee} from "../../model/employee";
@@ -8,6 +8,8 @@ import {AccountsService} from "../../service/accounts.service";
 import {User} from "../../model/user";
 import { ConfirmDialogComponent } from 'src/app/confirm-dialog/confirm-dialog.component';
 import { DownloadFileService } from 'src/app/service/download-file.service';
+import {MatTableDataSource} from "@angular/material/table";
+import {MatPaginator} from "@angular/material/paginator";
 
 @Component({
   selector: 'app-employees',
@@ -16,10 +18,17 @@ import { DownloadFileService } from 'src/app/service/download-file.service';
 })
 export class EmployeesComponent {
   employees: Employee[] = []
-
+  filteredEmployees = new MatTableDataSource<Employee>([]);
   tenant!: Tenant | undefined
-
   employee: Employee = new Employee(0,'','','',false, <Tenant>this.tenant)
+  displayedColumns =  ['id','name', 'phone','status',  'actions']
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+
+  ngAfterViewInit() {
+    this.filteredEmployees.paginator = this.paginator;
+  }
+
   constructor(
     public dialog: MatDialog,
     private treatmentService: EmployeesService,
@@ -39,6 +48,7 @@ export class EmployeesComponent {
     // @ts-ignore
     this.treatmentService.get(this.tenant.id).subscribe((employees)=>{
       this.employees = employees
+      this.filteredEmployees.data = employees;
     })
   }
 
@@ -70,7 +80,7 @@ export class EmployeesComponent {
     });
   }
 
-  downloadCsv() {    
+  downloadCsv() {
     const downloadUrl = `${this.employeesService.apiUrl}/employees-csv?tenantId=${this.tenant?.id}`
     this.downloadService
       .download(downloadUrl)
@@ -83,7 +93,7 @@ export class EmployeesComponent {
         URL.revokeObjectURL(objectUrl);
       })
   }
-  
+
   delete(id: number) {
     const dialog = this.dialog.open(ConfirmDialogComponent, {
       data: {
@@ -100,7 +110,18 @@ export class EmployeesComponent {
           .subscribe(response => { this.fetchEmployees() })
       }
     })
+  }
 
+  applyFilter(event: KeyboardEvent) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    if (filterValue.trim() === '') {
+      this.filteredEmployees.data = this.employees;
+      return;
+    }
+    this.filteredEmployees.data = this.employees.filter(e => {
+      e.surname?.toLowerCase().includes(filterValue.toLowerCase()) ||
+      e.firstName?.toLowerCase().includes(filterValue.toLowerCase())
+    });
   }
 
 }

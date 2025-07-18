@@ -5,57 +5,76 @@
     Add Tenant
   </button>
 
-  <table mat-table [dataSource]="tenants" class="mat-elevation-z8">
+  <div class="mat-elevation-z8">
+    <div class="row p-2">
+      <div class="col-md-12">
+        <mat-form-field class="w-100">
+          <mat-label>Filter</mat-label>
+          <input matInput placeholder="Type to filter" (keyup)="applyFilter($event)" #input>
+          <mat-icon matPrefix>search</mat-icon>
+        </mat-form-field>
+      </div>
+    </div>
+    <table mat-table [dataSource]="filteredTenants" >
 
-    <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef> Name </th>
-      <td mat-cell *matCellDef="let element"> {{element.companyName}} </td>
-    </ng-container>
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef> Name </th>
+        <td mat-cell *matCellDef="let element"> {{element.companyName}} </td>
+      </ng-container>
 
-    <ng-container matColumnDef="phone">
-      <th mat-header-cell *matHeaderCellDef> Phone Number </th>
-      <td mat-cell *matCellDef="let element"> {{element.companyPhone}} </td>
-    </ng-container>
+      <ng-container matColumnDef="industry">
+        <th mat-header-cell *matHeaderCellDef> Industry </th>
+        <td mat-cell *matCellDef="let element"> {{element.industry ? element.industry.name : ''}} </td>
+      </ng-container>
 
-    <ng-container matColumnDef="email">
-      <th mat-header-cell *matHeaderCellDef> Email </th>
-      <td mat-cell *matCellDef="let element"> {{element.companyEmail}} </td>
-    </ng-container>
 
-    <ng-container matColumnDef="contact">
-      <th mat-header-cell *matHeaderCellDef> Contact </th>
-      <td mat-cell *matCellDef="let element"> {{element.contactName}} </td>
-    </ng-container>
+      <ng-container matColumnDef="contact">
+        <th mat-header-cell *matHeaderCellDef> Contact </th>
+        <td mat-cell *matCellDef="let element">
+          {{element.contactName}}<br>
+          {{element.companyEmail}}<br>
+          {{element.companyPhone}}
+        </td>
+      </ng-container>
 
-    <ng-container matColumnDef="reference">
-      <th mat-header-cell *matHeaderCellDef> Reference </th>
-      <td mat-cell *matCellDef="let element"> {{element.reference}} </td>
-    </ng-container>
+      <ng-container matColumnDef="reference">
+        <th mat-header-cell *matHeaderCellDef> Reference </th>
+        <td mat-cell *matCellDef="let element"> {{element.reference}} </td>
+      </ng-container>
 
-    <ng-container matColumnDef="status">
-      <th mat-header-cell *matHeaderCellDef> Status </th>
-      <td mat-cell *matCellDef="let element"> {{tenant.isActive ? "Active" : "Suspended"}} </td>
-    </ng-container>
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef> Status </th>
+        <td mat-cell *matCellDef="let element">
+          <span class="badge rounded-pill bg-success" *ngIf="element.isActive">Active</span>
+          <span class="badge rounded-pill bg-danger" *ngIf="!element.isActive">Suspended</span>
+        </td>
+      </ng-container>
 
-    <ng-container matColumnDef="actions">
-      <th mat-header-cell *matHeaderCellDef> Actions </th>
-      <td mat-cell *matCellDef="let element">
-        <button mat-button [matMenuTriggerFor]="menu">
-          <mat-icon>more_vert</mat-icon>
-        </button>
-        <mat-menu #menu="matMenu">
-          <button mat-menu-item data-bs-toggle="modal" data-bs-target="#treatment-form" (click)="editTenant(tenant.id)">Edit</button>
-          <button mat-menu-item data-bs-toggle="modal" data-bs-target="#treatment-form" (click)="toggleActive(tenant.id)">
-            {{tenant.isActive ? "Suspend" : "Activate"}}
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef> Actions </th>
+        <td mat-cell *matCellDef="let element">
+          <button mat-button [matMenuTriggerFor]="menu">
+            <mat-icon>more_vert</mat-icon>
           </button>
-          <a mat-menu-item href="users/{{tenant.id}}" >Users</a>
-          <button mat-menu-item (click)="delete(tenant.id)">Delete</button>
-        </mat-menu>
-      </td>
-    </ng-container>
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  </table>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item data-bs-toggle="modal" data-bs-target="#treatment-form" (click)="editTenant(element.id)">Edit</button>
+            <button mat-menu-item data-bs-toggle="modal" data-bs-target="#treatment-form" (click)="toggleActive(element.id)">
+              {{element.isActive ? "Suspend" : "Activate"}}
+            </button>
+            <a mat-menu-item href="users/{{element.id}}" >Users</a>
+            <button mat-menu-item (click)="delete(element.id)">Delete</button>
+          </mat-menu>
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]"
+                   showFirstLastButtons
+                   aria-label="Select page">
+    </mat-paginator>
+  </div>
+
 
 
 </app-admin-layout>

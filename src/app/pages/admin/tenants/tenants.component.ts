@@ -1,9 +1,14 @@
-import {Component, Inject} from '@angular/core';
+import {Component, Inject, ViewChild} from '@angular/core';
 import {Tenant} from "../../../model/tenant";
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {TenantsService} from "../../../service/tenants.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import { ConfirmDialogComponent } from 'src/app/confirm-dialog/confirm-dialog.component';
+import {Industry} from "../../../model/industry";
+import {IndustryService} from "../../../service/industry.service";
+import {MatTableDataSource} from "@angular/material/table";
+import {User} from "../../../model/user";
+import {MatPaginator} from "@angular/material/paginator";
 
 @Component({
   selector: 'app-tenants',
@@ -14,7 +19,14 @@ export class TenantsComponent {
 
   tenant: Tenant = new Tenant(0,'','','','','','','','','')
   tenants: Tenant[] = []
-  displayedColumns: string[] = [ 'name','phone', 'email', 'contact', 'reference', 'status',  'actions']
+  filteredTenants = new MatTableDataSource<Tenant>([]);
+  displayedColumns: string[] = [ 'name','industry', 'contact', 'reference', 'status',  'actions']
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+
+  ngAfterViewInit() {
+    this.filteredTenants.paginator = this.paginator;
+  }
 
   constructor(
     public dialog: MatDialog,
@@ -27,7 +39,10 @@ export class TenantsComponent {
 
   fetchTenants(){
     this.tenantsService.get()
-      .subscribe(tenants=> this.tenants = tenants)
+      .subscribe(tenants=> {
+        this.tenants = tenants;
+        this.filteredTenants.data = tenants;
+      })
   }
 
   newTenant(){
@@ -90,6 +105,15 @@ export class TenantsComponent {
 
   }
 
+  applyFilter(event: KeyboardEvent) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    if (filterValue.trim() === '') {
+      this.filteredTenants.data = this.tenants;
+      return;
+    }
+    this.filteredTenants.data = this.tenants.filter(t => t.companyName?.toLowerCase().includes(filterValue.toLowerCase()));
+  }
+
 }
 
 @Component({
@@ -99,12 +123,19 @@ export class TenantsComponent {
 export class TenantsFormDialog {
 
   tenant!: Tenant
+  industries: Industry[] = []
   constructor(
     @Inject(MAT_DIALOG_DATA) data: { tenant: Tenant },
     private tenantsService: TenantsService,
+    private industryService: IndustryService,
     private dialogRef: MatDialogRef<TenantsFormDialog>,
     private _snackBar: MatSnackBar) {
     this.tenant = data.tenant
+  }
+  ngOnInit(): void {
+    this.industryService.getAllIndustries().subscribe(industries => {
+      this.industries = industries;
+    })
   }
   saveTenant() {
     this.tenantsService.save( this.tenant ).subscribe((treatment)=>{

@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import {Component, Inject, ViewChild} from '@angular/core';
 import {Booking} from "../../model/booking";
 import {BookingService} from "../../service/booking.service";
 import {Tenant} from "../../model/tenant";
@@ -10,6 +10,8 @@ import {User} from "../../model/user";
 import { Utils } from 'src/app/utils/utils';
 import { FormGroup, FormControl } from '@angular/forms';
 import * as moment from 'moment';
+import {MatTableDataSource} from "@angular/material/table";
+import {MatPaginator} from "@angular/material/paginator";
 
 @Component({
   selector: 'app-reservations',
@@ -21,7 +23,13 @@ export class ReservationsComponent {
   tenant! : Tenant | undefined
   booking!: Booking
   bookings: Booking[] = []
+  filteredReservations = new MatTableDataSource<Booking>([]);
+  displayedColumns = ['date', 'time','treatment','employee','customer', 'status', 'actions'];
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
 
+  ngAfterViewInit() {
+    this.filteredReservations.paginator = this.paginator;
+  }
   constructor(
     private bookingService: BookingService,
     private dialog: MatDialog,
@@ -53,7 +61,10 @@ export class ReservationsComponent {
     const endDate = moment(this.range.value.end).format()
     //@ts-ignore
     this.bookingService.getTenantBookings(this.tenant.id, startDate, endDate)
-      .subscribe(bookings=> this.bookings = bookings)
+      .subscribe(bookings=> {
+        this.bookings = bookings
+        this.filteredReservations.data = bookings;
+      })
   }
 
   cancelBooking(bookingId:number){
@@ -88,6 +99,22 @@ export class ReservationsComponent {
 
     dialogRef.afterClosed().subscribe(result => {
       this.fetchBookings()
+    });
+  }
+
+  applyFilter(event: KeyboardEvent) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    if (filterValue.trim() === '') {
+      this.filteredReservations.data = this.bookings;
+      return;
+    }
+    this.filteredReservations.data = this.bookings.filter(u => {
+      u.client.firstName ?.toLowerCase().includes(filterValue.toLowerCase()) ||
+      u.client.surname ?.toLowerCase().includes(filterValue.toLowerCase()) ||
+      u.treatments.some(t => t.name.toLowerCase().includes(filterValue.toLowerCase())) ||
+      u.employee.firstName ?.toLowerCase().includes(filterValue.toLowerCase()) ||
+      u.employee.surname ?.toLowerCase().includes(filterValue.toLowerCase())
+
     });
   }
 }

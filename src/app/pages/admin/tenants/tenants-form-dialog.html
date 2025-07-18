@@ -4,28 +4,41 @@
     <div class="row">
       <div class="col-sm-12 col-md-6">
         <mat-form-field class="w-100">
-          <mat-label>Spa Name</mat-label>
+          <mat-label>Tenant Name</mat-label>
           <input matInput [(ngModel)]="tenant.companyName" name="firstName">
         </mat-form-field>
       </div>
       <div class="col-sm-12 col-md-6">
-        <mat-form-field class="w-100">
-          <mat-label>Spa Phone Number</mat-label>
-          <input matInput [(ngModel)]="tenant.companyPhone" name="phoneNumber">
+        <mat-form-field appearance="fill" class="w-100">
+          <mat-label>Industry</mat-label>
+          <mat-select [(ngModel)]="tenant.industry" required name="industry">
+            <mat-option *ngFor="let industry of industries" [value]="industry">
+              {{ industry.name }}
+            </mat-option>
+          </mat-select>
         </mat-form-field>
       </div>
+
     </div>
 
     <div class="row">
       <div class="col-sm-12 col-md-6">
         <mat-form-field class="w-100">
-          <mat-label>Spa Email</mat-label>
-          <input matInput [(ngModel)]="tenant.companyEmail" name="email">
+          <mat-label>Tenant Phone Number</mat-label>
+          <input matInput [(ngModel)]="tenant.companyPhone" name="phoneNumber">
         </mat-form-field>
       </div>
       <div class="col-sm-12 col-md-6">
         <mat-form-field class="w-100">
-          <mat-label>Spa Address</mat-label>
+          <mat-label>Tenant Email</mat-label>
+          <input matInput [(ngModel)]="tenant.companyEmail" name="email">
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <mat-form-field class="w-100">
+          <mat-label>Tenant Address</mat-label>
           <input matInput [(ngModel)]="tenant.companyAddress" name="address">
         </mat-form-field>
       </div>

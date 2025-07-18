@@ -11,6 +11,8 @@ export class LayoutComponent {
 
   tenant!: Tenant
   @Input() activeMenu = "reserve"
+  @Input() pageTitle = "";
+  @Input() pageSubTitle = "";
 
   tawkScriptElement: HTMLScriptElement;
 

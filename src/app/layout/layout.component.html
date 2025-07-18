@@ -2,7 +2,7 @@
   <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" style="width: 280px;">
     <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
       <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"/></svg>
-      <span class="fs-4">RedKokia</span>
+      <span class="fs-4">NextPerch</span>
     </a>
     <hr>
     <ul class="nav nav-pills flex-column mb-auto">
@@ -70,7 +70,11 @@
       </header>
     </div>
 
-    <div class="p-4">
+    <div class="px-4">
+      <div class="mb-4 border-bottom" *ngIf="pageTitle">
+        <h2 class="mb-2">{{pageTitle}}</h2>
+        <h5 class="text-body-tertiary fw-semibold" *ngIf="pageSubTitle">{{pageSubTitle}}</h5>
+      </div>
       <ng-content></ng-content>
     </div>
 

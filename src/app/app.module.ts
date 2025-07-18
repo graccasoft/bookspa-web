@@ -51,6 +51,7 @@ import { CategoryDialogComponent } from './pages/admin/industry-settings/categor
 import { IndustryDialogComponent } from './pages/admin/industry-settings/industry-dialog/industry-dialog.component';
 import {MatTabsModule} from "@angular/material/tabs";
 import {MatTableModule} from "@angular/material/table";
+import {MatPaginatorModule} from "@angular/material/paginator";
 
 @NgModule({
   declarations: [
@@ -81,33 +82,34 @@ import {MatTableModule} from "@angular/material/table";
     CategoryDialogComponent,
     IndustryDialogComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    HttpClientModule,
-    FormsModule,
-    MatSnackBarModule,
-    MatToolbarModule,
-    MatSidenavModule,
-    MatListModule,
-    MatIconModule,
-    MatLineModule,
-    MatGridListModule,
-    MatCardModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatChipsModule,
-    MatInputModule,
-    MatSelectModule,
-    MatButtonModule,
-    MatMenuModule,
-    MatDialogModule,
-    MatStepperModule,
-    ReactiveFormsModule,
-    MatTabsModule,
-    MatTableModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        HttpClientModule,
+        FormsModule,
+        MatSnackBarModule,
+        MatToolbarModule,
+        MatSidenavModule,
+        MatListModule,
+        MatIconModule,
+        MatLineModule,
+        MatGridListModule,
+        MatCardModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatChipsModule,
+        MatInputModule,
+        MatSelectModule,
+        MatButtonModule,
+        MatMenuModule,
+        MatDialogModule,
+        MatStepperModule,
+        ReactiveFormsModule,
+        MatTabsModule,
+        MatTableModule,
+        MatPaginatorModule
+    ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },

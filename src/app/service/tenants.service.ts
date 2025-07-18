@@ -41,7 +41,7 @@ export class TenantsService {
   }
 
   toggleActive(tenant: Tenant) : Observable<ApiResponse> {
-    return this.http.patch<ApiResponse>(`${this.apiUrl}/${tenant.id}`,tenant);
+    return this.http.patch<ApiResponse>(`${this.apiUrl}/${tenant.id}/toggle-status`,tenant);
   }
 
   delete(tenantId: number) : Observable<ApiResponse> {

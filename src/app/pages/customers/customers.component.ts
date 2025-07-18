@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import {Component, Inject, ViewChild} from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from "@angular/material/dialog";
 import { ClientsService } from "../../service/clients.service";
 import { AccountsService } from "../../service/accounts.service";
@@ -8,6 +8,8 @@ import { User } from "../../model/user";
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ConfirmDialogComponent } from 'src/app/confirm-dialog/confirm-dialog.component';
 import { DownloadFileService } from 'src/app/service/download-file.service';
+import {MatTableDataSource} from "@angular/material/table";
+import {MatPaginator} from "@angular/material/paginator";
 
 @Component({
   selector: 'app-customers',
@@ -17,7 +19,9 @@ import { DownloadFileService } from 'src/app/service/download-file.service';
 export class CustomersComponent {
   tenant!: Tenant | undefined
   clients: Client[] = []
+  filteredClients = new MatTableDataSource<Client>([]);
   client!: Client
+  displayedColumns = ['id', 'name', 'phone', 'address', 'actions']
   constructor(
     public dialog: MatDialog,
     private clientsService: ClientsService,
@@ -25,6 +29,12 @@ export class CustomersComponent {
     private downloadService: DownloadFileService,
     private _snackBar: MatSnackBar
   ) { }
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+
+  ngAfterViewInit() {
+    this.filteredClients.paginator = this.paginator;
+  }
 
   ngOnInit() {
     const user = this.accountsService.userValue as User;
@@ -38,7 +48,10 @@ export class CustomersComponent {
   fetchCustomers() {
     // @ts-ignore
     this.clientsService.get(this.tenant.id)
-      .subscribe(clients => this.clients = clients)
+      .subscribe(clients => {
+        this.clients = clients;
+        this.filteredClients.data = clients;
+      })
   }
   addNew() {
     this.client = new Client(0, '', '', '', '', '', '', '', <Tenant>this.tenant);
@@ -55,7 +68,7 @@ export class CustomersComponent {
       this.fetchCustomers()
     });
   }
-  downloadCsv() {    
+  downloadCsv() {
     const downloadUrl = `${this.clientsService.apiUrl}/clients-csv?tenantId=${this.tenant?.id}`
     this.downloadService
       .download(downloadUrl)
@@ -87,6 +100,17 @@ export class CustomersComponent {
       }
     })
 
+  }
+  applyFilter(event: KeyboardEvent) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    if (filterValue.trim() === '') {
+      this.filteredClients.data = this.clients
+      return;
+    }
+    this.filteredClients.data = this.clients.filter(u => {
+      u.surname?.toLowerCase().includes(filterValue.toLowerCase()) ||
+      u.firstName?.toLowerCase().includes(filterValue.toLowerCase())
+    });
   }
 }
 @Component({
